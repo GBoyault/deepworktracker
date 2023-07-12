@@ -1,0 +1,104 @@
+.project-select {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.selection {
+  border: 1px solid grey;
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.15rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.selection:hover {
+  background-color: #f0f0f0
+
+}
+
+.selection--empty {
+  font-style: italic;
+  color: grey;
+}
+
+.selection svg {
+  width: 1em;
+  fill: grey;
+  display: inline-block;
+}
+
+.project-select--expanded .selection {
+  border-color: var(--color-green);
+}
+
+.project-select--expanded .selection svg {
+  transform: rotate(180deg);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  box-shadow: 2px 6px 25px rgb(180, 180, 180);
+  animation: zoomIn 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: top;
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.project-item {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+}
+
+.project-item--no-project {
+  color: grey;
+}
+
+.project-item:hover,
+.project-item--selected {
+  background-color: rgb(231, 230, 230);
+}
+
+.new-project {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  background-color: var(--color-green);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.new-project::before {
+  content: "+";
+  margin-right: 0.75em;
+}
+
+.new-project:hover {
+  box-shadow: inset 15px 15px 30px 0 #ffffff4d;
+}

@@ -1,0 +1,68 @@
+.period {
+  background-color: white;
+  display: flex;
+  height: 5.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--color-green);
+  border-right: none;
+  border-top-left-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: none;
+  transition: all 0.15s ease-out;
+  overflow: hidden;
+}
+
+.period:hover {
+  box-shadow: -2px 2px 20px rgba(128, 128, 128, 0.363);
+  border-color: transparent;
+}
+
+.duration {
+  width: 6.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 3.5;
+  color: var(--color-green);
+
+  background-color: #ececec;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 100% 100%, 0% 100%);
+  transition: all .25s ease-in-out;
+}
+
+.period:hover .duration {
+  clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+}
+
+.duration small {
+  font-size: 0.7em;
+}
+
+.duration--too-short {
+  color: rgb(233, 130, 130);
+}
+
+.content {
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  flex-grow: 1;
+}
+
+.timing,
+.description {
+  margin-bottom: 0.5rem;
+}
+
+.project {
+  font-weight: 700;
+}
+
+.project-border {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 5px;
+}

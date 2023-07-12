@@ -1,0 +1,19 @@
+.navigation {
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+}
+
+.navigation li a {
+  text-decoration: none;
+  color: black;
+}
+
+.navigation li a:hover,
+.navigation li a.active {
+  text-decoration: underline;
+  text-decoration-color: var(--color-green);
+}

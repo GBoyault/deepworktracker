@@ -1,0 +1,11 @@
+.period-list {
+  width: 23rem;
+  align-self: flex-end;
+  padding-top: 10rem;
+}
+
+.period-list h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
