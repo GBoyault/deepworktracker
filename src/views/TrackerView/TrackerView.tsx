@@ -2,7 +2,7 @@ import { useReducer, useState } from 'react';
 import { Period, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models/models';
 import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
 import PeriodList from '../../components/Periods/PeriodList/PeriodList';
-import NewProject from '../../components/Periods/NewPeriod/CreateProject';
+import NewProject from '../../components/Periods/NewPeriod/NewProject';
 import Modal from '../../components/UI/Modal/Modal';
 import styles from './TrackerView.module.css';
 
@@ -74,7 +74,10 @@ const DUMMY_PROJECTS: Project[] = [
 const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
   switch (action.type) {
     case ActionsKind.CREATE:
-      return periods.concat(action.newPeriod)
+      return periods.concat(action.newPeriod);
+
+    case ActionsKind.DELETE:
+      return periods.filter(period => period.id !== action.periodId);
   }
 
   return periods;
@@ -99,7 +102,14 @@ const TrackerView = () => {
     periodsDispatch({ type: ActionsKind.CREATE, newPeriod });
   };
 
-  // const createProjectHandler = ()
+  const deletePeriodHandler = (periodId: string) => {
+    periodsDispatch({ type: ActionsKind.DELETE, periodId });
+  };
+
+  const createProjectHandler = (newProject: Project) => {
+    projectsDispatch({ type: ActionsKind.CREATE, newProject });
+    setShowNewProjectModal(false);
+  };
 
   return (
     <div className={styles['tracker-view']}>
@@ -108,10 +118,16 @@ const TrackerView = () => {
         onCreatePeriod={createPeriodHandler}
         onCreateProject={() => setShowNewProjectModal(true)}
       />
-      <PeriodList periods={periods} />
+      <PeriodList
+        periods={periods}
+        onDeletePeriod={deletePeriodHandler}
+      />
       {showNewProjectModal && (
         <Modal onClose={() => setShowNewProjectModal(false)}>
-          <NewProject />
+          <NewProject
+            onCreateProject={createProjectHandler}
+            onCancel={() => setShowNewProjectModal(false)}
+          />
         </Modal>
       )}
     </div>

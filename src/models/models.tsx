@@ -26,12 +26,16 @@ export enum ActionsKind {
   DELETE = 'DELETE'
 };
 
-export interface PeriodsAction {
-  type: ActionsKind;
-  newPeriod: Period;
-}
 
-export interface ProjectsAction {
+export type PeriodsAction = {
+  type: ActionsKind.CREATE | ActionsKind.UPDATE;
+  newPeriod: Period;
+} | {
+  type: ActionsKind.DELETE;
+  periodId: Period['id']
+};
+
+export type ProjectsAction = {
   type: ActionsKind;
   newProject: Project;
-}
+};

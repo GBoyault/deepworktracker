@@ -26,7 +26,7 @@ const NewPeriod = (props: NewPeriodProp) => {
 
   const startPeriodHandler = (): void => {
     const newPeriod: Period = {
-      id: 'newID',
+      id: Date.now().toString(),
       start: Date.now()
     };
 
@@ -39,6 +39,8 @@ const NewPeriod = (props: NewPeriodProp) => {
     }
 
     props.onCreatePeriod(newPeriod);
+    setDescription('');
+    setSelectedProject(null);
   };
 
 

@@ -7,7 +7,8 @@ import { PeriodDuration } from '../../../utils/period-duration';
 import classes from './PeriodList.module.css';
 
 type PeriodListProp = {
-  periods: PeriodType[]
+  periods: PeriodType[],
+  onDeletePeriod: (periodId: string) => void
 }
 
 
@@ -17,6 +18,13 @@ const PeriodList = (props: PeriodListProp) => {
 
   const editPeriodHandler = (period: PeriodType) => {
     setPeriodToEdit(period);
+  };
+
+  const deletePeriodHandler = () => {
+    if (periodToEdit) {
+      props.onDeletePeriod(periodToEdit.id);
+    }
+    setPeriodToEdit(null);
   };
 
   const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end));
@@ -46,7 +54,10 @@ const PeriodList = (props: PeriodListProp) => {
       </div>
       {periodToEdit && (
         <Modal onClose={() => setPeriodToEdit(null)}>
-          <EditPeriod period={periodToEdit} />
+          <EditPeriod
+            period={periodToEdit}
+            onDelete={deletePeriodHandler}
+          />
         </Modal>
       )}
     </>
