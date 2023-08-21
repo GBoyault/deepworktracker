@@ -26,10 +26,12 @@ export enum ActionsKind {
   DELETE = 'DELETE'
 };
 
-
 export type PeriodsAction = {
-  type: ActionsKind.CREATE | ActionsKind.UPDATE;
+  type: ActionsKind.CREATE;
   newPeriod: Period;
+} | {
+  type: ActionsKind.UPDATE;
+  updatedPeriod: Period;
 } | {
   type: ActionsKind.DELETE;
   periodId: Period['id']
@@ -38,4 +40,12 @@ export type PeriodsAction = {
 export type ProjectsAction = {
   type: ActionsKind;
   newProject: Project;
+};
+
+
+export enum ButtonVariant {
+  BIG = 'big',
+  SMALL = 'small',
+  SECONDARY = 'secondary',
+  SIMPLE = 'simple'
 };

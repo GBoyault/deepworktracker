@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Project } from "../../../models/models";
+import { Project } from "../../../models";
 import classes from './ProjectSelect.module.css';
 
 

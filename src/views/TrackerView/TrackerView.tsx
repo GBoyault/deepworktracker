@@ -1,10 +1,12 @@
 import { useReducer, useState } from 'react';
-import { Period, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models/models';
+import { Period, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models';
+
 import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
 import PeriodList from '../../components/Periods/PeriodList/PeriodList';
 import NewProject from '../../components/Periods/NewPeriod/NewProject';
+import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod';
 import Modal from '../../components/UI/Modal/Modal';
-import styles from './TrackerView.module.css';
+import classes from './TrackerView.module.css';
 
 
 const DUMMY_PERIODS: Period[] = [
@@ -62,7 +64,7 @@ const DUMMY_PROJECTS: Project[] = [
   {
     id: 'idp1',
     name: 'Boggle',
-    color: '#622a94'
+    color: '#a75ee8'
   },
   {
     id: 'idp2',
@@ -78,6 +80,14 @@ const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
 
     case ActionsKind.DELETE:
       return periods.filter(period => period.id !== action.periodId);
+
+    case ActionsKind.UPDATE:
+      const updatedPeriods = periods.slice();
+
+      const updatedPeriodIndex = updatedPeriods.findIndex(period => period.id === action.updatedPeriod.id);
+      updatedPeriods[updatedPeriodIndex] = action.updatedPeriod;
+
+      return updatedPeriods;
   }
 
   return periods;
@@ -97,10 +107,16 @@ const TrackerView = () => {
   const [periods, periodsDispatch] = useReducer(periodReducer, DUMMY_PERIODS);
   const [projects, projectsDispatch] = useReducer(projectdReducer, DUMMY_PROJECTS);
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
+  const [lastCreatedProject, setLastCreatedProject] = useState<Project | null>(null);
+  const [activePeriod, setActivePeriod] = useState<Period | null>(null);
 
-  const createPeriodHandler = (newPeriod: Period) => {
-    periodsDispatch({ type: ActionsKind.CREATE, newPeriod });
+  const startPeriodHandler = (newPeriod: Period) => {
+    setActivePeriod(newPeriod);
   };
+
+  const updatePeriodHandler = (updatedPeriod: Period) => {
+    periodsDispatch({ type: ActionsKind.UPDATE, updatedPeriod });
+  }
 
   const deletePeriodHandler = (periodId: string) => {
     periodsDispatch({ type: ActionsKind.DELETE, periodId });
@@ -109,27 +125,56 @@ const TrackerView = () => {
   const createProjectHandler = (newProject: Project) => {
     projectsDispatch({ type: ActionsKind.CREATE, newProject });
     setShowNewProjectModal(false);
+    setLastCreatedProject(newProject);
   };
 
+  const stopPeriodHandler = () => {
+    if (!activePeriod) {
+      return;
+    }
+
+    activePeriod.end = Date.now();
+    periodsDispatch({ type: ActionsKind.CREATE, newPeriod: activePeriod });
+    setActivePeriod(null);
+  }
+
   return (
-    <div className={styles['tracker-view']}>
-      <NewPeriod
-        projects={projects}
-        onCreatePeriod={createPeriodHandler}
-        onCreateProject={() => setShowNewProjectModal(true)}
-      />
-      <PeriodList
-        periods={periods}
-        onDeletePeriod={deletePeriodHandler}
-      />
-      {showNewProjectModal && (
-        <Modal onClose={() => setShowNewProjectModal(false)}>
-          <NewProject
-            onCreateProject={createProjectHandler}
-            onCancel={() => setShowNewProjectModal(false)}
-          />
-        </Modal>
+    <div className={classes['tracker-view']}>
+      {activePeriod && (
+        <ActivePeriod
+          period={activePeriod}
+          onClick={stopPeriodHandler}
+        />
       )}
+      {!activePeriod && (
+        <>
+          <NewPeriod
+            projects={projects}
+            lastCreatedProject={lastCreatedProject}
+            onStartPeriod={startPeriodHandler}
+            onCreateProject={() => setShowNewProjectModal(true)}
+          />
+          {periods.length > 0 && (
+            <PeriodList
+              periods={periods}
+              onDeletePeriod={deletePeriodHandler}
+              lastCreatedProject={lastCreatedProject}
+              projects={projects}
+              onCreateProject={() => setShowNewProjectModal(true)}
+              onUpdatePeriod={updatePeriodHandler}
+            />
+          )}
+          {showNewProjectModal && (
+            <Modal onClose={() => setShowNewProjectModal(false)}>
+              <NewProject
+                onCreateProject={createProjectHandler}
+                onCancel={() => setShowNewProjectModal(false)}
+              />
+            </Modal>
+          )}
+        </>
+      )}
+
     </div>
   );
 }

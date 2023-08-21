@@ -1,0 +1,39 @@
+.edit-period h2 {
+  color: var(--color-green);
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+  margin-bottom: 2.25rem;
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  border-bottom: 1px solid var(--color-green);
+}
+
+.input {
+  margin-bottom: 1rem;
+  display: block;
+  width: 100%;
+  font-size: 1em;
+  padding: 0.5em 0.75em;
+  outline: none;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.2rem;
+}
+
+.dates {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dates > div {
+  flex-grow: 1;
+}
+
+.actions {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

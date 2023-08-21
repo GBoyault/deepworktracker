@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Period as PeriodType } from '../../../models/models';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+
+import { Project, Period as PeriodType } from '../../../models';
 import Period from '../Period/Period';
 import Modal from '../../UI/Modal/Modal';
 import EditPeriod from '../EditPeriod/EditPeriod';
@@ -8,7 +11,11 @@ import classes from './PeriodList.module.css';
 
 type PeriodListProp = {
   periods: PeriodType[],
-  onDeletePeriod: (periodId: string) => void
+  projects: Project[],
+  lastCreatedProject: Project | null,
+  onCreateProject: () => void,
+  onDeletePeriod: (periodId: string) => void,
+  onUpdatePeriod: (periodData: PeriodType) => void
 }
 
 
@@ -19,6 +26,11 @@ const PeriodList = (props: PeriodListProp) => {
   const editPeriodHandler = (period: PeriodType) => {
     setPeriodToEdit(period);
   };
+
+  const updatedPeriodHandler = (updatedPeriod: PeriodType) => {
+    props.onUpdatePeriod(updatedPeriod);
+    setPeriodToEdit(null);
+  }
 
   const deletePeriodHandler = () => {
     if (periodToEdit) {
@@ -39,25 +51,38 @@ const PeriodList = (props: PeriodListProp) => {
     <>
       <div className={classes['period-list']}>
         <header>
-          <h2>Aujourdhui :<br />
-            {formattedTotal} <small>de concentration</small><br />
-            {interruptions.length} <small>interruptions</small></h2>
-        </header>
+          <h2>Aujourdhui :</h2>
+          <div className={classes.details}>
+            <span className={classes.success}>{formattedTotal}</span> de concentration
+            {interruptions.length > 0 && (
+              <>/ <span className={classes.failure}>{interruptions.length}</span> interruptions</>
+            )}
+          </div>
+        </header >
 
-        {periods.map(period => (
-          <Period
-            key={period.id}
-            period={period}
-            onClick={editPeriodHandler.bind(null, period)}
-          />
-        ))}
-      </div>
+        {
+          periods.map(period => (
+            <Period
+              key={period.id}
+              period={period}
+              onClick={editPeriodHandler.bind(null, period)}
+            />
+          ))
+        }
+      </div >
       {periodToEdit && (
         <Modal onClose={() => setPeriodToEdit(null)}>
-          <EditPeriod
-            period={periodToEdit}
-            onDelete={deletePeriodHandler}
-          />
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <EditPeriod
+              period={periodToEdit}
+              projects={props.projects}
+              lastCreatedProject={props.lastCreatedProject}
+              onDelete={deletePeriodHandler}
+              onSave={updatedPeriodHandler}
+              onCancel={() => setPeriodToEdit(null)}
+              onCreateProject={props.onCreateProject}
+            />
+          </LocalizationProvider>
         </Modal>
       )}
     </>

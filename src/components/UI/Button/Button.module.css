@@ -21,8 +21,23 @@
   letter-spacing: 0.25em;
 }
 
+.button--secondary {
+  background-color: white;
+  border: 1px solid var(--color-green);
+  color: var(--color-green);
+}
+.button--simple {
+  background-color: white;
+  border: none;
+  color: var(--color-green);
+  box-shadow: none;
+  text-transform: initial;
+}
+
 .button:hover:enabled {
   box-shadow: inset 15px 15px 30px 0 #ffffff4d, 0 5px 10px 0 #1d0dca3f;
+  background-color: var(--color-green);
+  color: white;
 }
 
 .button:active:enabled {

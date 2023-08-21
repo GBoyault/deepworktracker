@@ -1,0 +1,22 @@
+.active-period {
+  width: 30rem;
+  height: 30rem;
+  border: 1px solid white;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timer {
+  text-align: center;
+  color: white;
+  font-size: 7rem;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  margin: 0 auto;
+  width: max-content;
+}

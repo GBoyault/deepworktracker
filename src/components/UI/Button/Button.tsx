@@ -1,23 +1,32 @@
 import { PropsWithChildren } from 'react';
+import { ButtonVariant } from '../../../models';
 import classes from './Button.module.css';
 
 
 type ButtonProps = {
   onClick: () => void,
-  variant?: string,
+  variant?: ButtonVariant,
   disabled?: boolean,
 }
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
   let className = `${classes.button}`;
 
-  if ('small' === props.variant) {
-    className += ` ${classes['button--small']}`;
+  switch (props.variant) {
+    case ButtonVariant.SMALL:
+      className += ` ${classes['button--small']}`;
+      break;
+    case ButtonVariant.BIG:
+      className += ` ${classes['button--big']}`;
+      break;
+    case ButtonVariant.SECONDARY:
+      className += ` ${classes['button--secondary']}`;
+      break;
+    case ButtonVariant.SIMPLE:
+      className += ` ${classes['button--simple']}`;
+      break;
   }
 
-  if ('big' === props.variant) {
-    className += ` ${classes['button--big']}`;
-  }
 
   return (
     <button

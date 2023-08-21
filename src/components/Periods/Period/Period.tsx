@@ -1,11 +1,11 @@
-import { Period as PeriodType } from '../../../models/models';
+import { Period as PeriodType } from '../../../models';
 import classes from './Period.module.css';
 import { PeriodDuration } from '../../../utils/period-duration';
 
 
 type periodProps = {
   period: PeriodType,
-  onClick: () => void
+  onClick: () => void,
 };
 
 
@@ -16,15 +16,15 @@ const Period = (props: periodProps) => {
   const timing = periodDuration.formattedStartToEnd();
   const duration = periodDuration.formattedDuration;
 
-  const durationClasses = [classes.duration];
+  const periodClasses = [classes.period];
 
   if (periodDuration.isTooShort) {
-    durationClasses.push(classes['duration--too-short'])
+    periodClasses.push(classes['period--too-short'])
   }
 
   return (
-    <div className={classes.period} onClick={props.onClick} title='Éditer'>
-      <div className={durationClasses.join(' ')}>{duration}</div>
+    <div className={periodClasses.join(' ')} onClick={props.onClick} title='Éditer'>
+      <div className={classes.duration}>{duration}</div>
       <div className={classes.content}>
         <div className={classes.timing}>{timing}</div>
         <div className={classes.description}>{description}</div>
