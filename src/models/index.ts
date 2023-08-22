@@ -13,6 +13,18 @@ export type Period = {
   description?: string
 };
 
+export const isPeriod = (obj: any): obj is Period => {
+  if (!obj || typeof obj !== 'object') {
+    return false;
+  }
+
+  const hasId = obj.id !== undefined && typeof (obj as Period).id === 'string';
+  const hasStart = obj.start !== undefined && typeof (obj as Period).start === 'number';
+
+  return hasId && hasStart;
+}
+
+
 export type User = {
   name: string,
   periods: Period[],
@@ -23,12 +35,16 @@ export type User = {
 export enum ActionsKind {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
-  DELETE = 'DELETE'
+  DELETE = 'DELETE',
+  INIT = 'INIT'
 };
 
 export type PeriodsAction = {
   type: ActionsKind.CREATE;
   newPeriod: Period;
+} | {
+  type: ActionsKind.INIT;
+  newPeriods: Period[];
 } | {
   type: ActionsKind.UPDATE;
   updatedPeriod: Period;
@@ -38,8 +54,11 @@ export type PeriodsAction = {
 };
 
 export type ProjectsAction = {
-  type: ActionsKind;
+  type: ActionsKind.CREATE;
   newProject: Project;
+} | {
+  type: ActionsKind.INIT;
+  newProjects: Project[];
 };
 
 

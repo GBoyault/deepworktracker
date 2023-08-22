@@ -1,5 +1,7 @@
-import { useReducer, useState } from 'react';
-import { Period, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models';
+import { useEffect, useReducer, useState } from 'react';
+import { Period, isPeriod, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models';
+
+import { DUMMY_PROJECTS } from '../../utils/dummy-values';
 
 import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
 import PeriodList from '../../components/Periods/PeriodList/PeriodList';
@@ -9,72 +11,11 @@ import Modal from '../../components/UI/Modal/Modal';
 import classes from './TrackerView.module.css';
 
 
-const DUMMY_PERIODS: Period[] = [
-  {
-    id: 'id2',
-    description: 'implémentation chose',
-    start: 1688658850419,
-    end: 1688658959419,
-  },
-  {
-    id: 'id3',
-    description: 'implémentation machin',
-    start: 1688754348599,
-    end: 1688757958799,
-  },
-  {
-    id: 'id4',
-    start: 1688754348599,
-    end: 1688759958799,
-    description: 'implémentation projects',
-    project: {
-      id: 'idp1',
-      name: 'TimeTracker',
-      color: '#d38e34'
-    }
-  },
-  {
-    id: 'id5',
-    start: 1688754348599,
-    end: 1688756958799,
-  },
-  {
-    id: 'id6',
-    start: 1688754348599,
-    end: 1688756058799,
-  },
-  {
-    id: 'id7',
-    description: 'implémentation durées',
-    start: 1688754348599,
-    end: 1688754958799,
-  },
-  {
-    id: 'id8',
-    start: 1688659987224,
-    end: 1688659991141,
-  },
-  {
-    id: 'id9',
-    start: 1688659987224,
-    end: 1688660987224,
-  },
-];
-const DUMMY_PROJECTS: Project[] = [
-  {
-    id: 'idp1',
-    name: 'Boggle',
-    color: '#a75ee8'
-  },
-  {
-    id: 'idp2',
-    name: 'Des frites !',
-    color: '#c1b313'
-  },
-];
-
 const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
   switch (action.type) {
+    case ActionsKind.INIT:
+      return action.newPeriods.slice();
+
     case ActionsKind.CREATE:
       return periods.concat(action.newPeriod);
 
@@ -97,6 +38,9 @@ const projectdReducer = (projects: Project[], action: ProjectsAction): Project[]
   switch (action.type) {
     case ActionsKind.CREATE:
       return projects.concat(action.newProject)
+
+    case ActionsKind.INIT:
+      return projects.concat(action.newProjects)
   }
 
   return projects;
@@ -104,11 +48,69 @@ const projectdReducer = (projects: Project[], action: ProjectsAction): Project[]
 
 
 const TrackerView = () => {
-  const [periods, periodsDispatch] = useReducer(periodReducer, DUMMY_PERIODS);
-  const [projects, projectsDispatch] = useReducer(projectdReducer, DUMMY_PROJECTS);
+  const [projects, projectsDispatch] = useReducer(projectdReducer, []);
+  const [periods, periodsDispatch] = useReducer(periodReducer, []);
+  const [activePeriod, setActivePeriod] = useState<Period | null>(null);
+
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
   const [lastCreatedProject, setLastCreatedProject] = useState<Project | null>(null);
-  const [activePeriod, setActivePeriod] = useState<Period | null>(null);
+
+  useEffect(() => {
+    // Active Period ?
+    const storedActivePeriod = localStorage.getItem('dwp_active_period');
+    if (storedActivePeriod) {
+      const parsedActivePeriod = JSON.parse(storedActivePeriod);
+
+      if (isPeriod(parsedActivePeriod)) {
+        const newActivePeriod: Period = {
+          id: parsedActivePeriod.id,
+          start: parsedActivePeriod.start
+        };
+
+        if (parsedActivePeriod.project) {
+          newActivePeriod.project = parsedActivePeriod.project;
+        }
+
+        if (parsedActivePeriod.description) {
+          newActivePeriod.description = parsedActivePeriod.description;
+        }
+
+        setActivePeriod(newActivePeriod);
+      }
+    }
+
+    // Periods ?
+    const storedPeriods = localStorage.getItem('dwp_periods');
+    if (storedPeriods) {
+      const parsedPeriods = JSON.parse(storedPeriods);
+      periodsDispatch({ type: ActionsKind.INIT, newPeriods: parsedPeriods })
+    }
+
+    // Projects ?
+    const storedProjects = localStorage.getItem('dwp_projects');
+    if (storedProjects) {
+      const parsedProjects = JSON.parse(storedProjects);
+      projectsDispatch({ type: ActionsKind.INIT, newProjects: parsedProjects })
+    } else {
+      projectsDispatch({ type: ActionsKind.INIT, newProjects: DUMMY_PROJECTS })
+    }
+
+  }, []);
+
+
+
+  useEffect(() => {
+    localStorage.setItem('dwp_projects', JSON.stringify(projects));
+  }, [projects]);
+
+  useEffect(() => {
+    localStorage.setItem('dwp_periods', JSON.stringify(periods));
+  }, [periods]);
+
+  useEffect(() => {
+    localStorage.setItem('dwp_active_period', JSON.stringify(activePeriod));
+  }, [activePeriod]);
+
 
   const startPeriodHandler = (newPeriod: Period) => {
     setActivePeriod(newPeriod);
