@@ -111,6 +111,7 @@ const TrackerView = () => {
     localStorage.setItem('dwp_active_period', JSON.stringify(activePeriod));
   }, [activePeriod]);
 
+  
 
   const startPeriodHandler = (newPeriod: Period) => {
     setActivePeriod(newPeriod);
