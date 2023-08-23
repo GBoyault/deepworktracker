@@ -1,27 +1,23 @@
-export type Project = {
-  id: string;
-  name: string;
-  color: `#${string}`;
-};
+import { z } from 'zod';
 
-export type Period = {
-  id: string;
-  start: number;
-  end?: number;
-  project?: Project;
-  description?: string;
-};
+// créer ton schema de validation
+const colorSchema = z.string().regex(/^#[0-9a-fA-F]{6}$/);
+export const projectSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  color: colorSchema,
+});
+// et tu créer ton type à partir de ton schema
+export type Project = z.infer<typeof projectSchema>;
 
-export const isPeriod = (obj: any): obj is Period => {
-  if (!obj || typeof obj !== 'object') {
-    return false;
-  }
-
-  const hasId = obj.id !== undefined && typeof (obj as Period).id === 'string';
-  const hasStart = obj.start !== undefined && typeof (obj as Period).start === 'number';
-
-  return hasId && hasStart;
-};
+export const periodSchema = z.object({
+  id: z.string(),
+  start: z.number(),
+  end: z.number().optional(),
+  project: projectSchema.optional(),
+  description: z.string().optional(),
+});
+export type Period = z.infer<typeof periodSchema>;
 
 export type User = {
   name: string;

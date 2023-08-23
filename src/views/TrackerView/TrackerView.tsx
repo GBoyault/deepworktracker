@@ -1,12 +1,12 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Period, isPeriod, Project, PeriodsAction, ProjectsAction } from '../../models';
+import { Period, PeriodsAction, Project, ProjectsAction, periodSchema, projectSchema } from '../../models';
 
 import { DUMMY_PROJECTS } from '../../utils/dummy-values';
 
-import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
-import PeriodList from '../../components/Periods/PeriodList/PeriodList';
-import NewProject from '../../components/Periods/NewPeriod/NewProject';
 import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod';
+import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
+import NewProject from '../../components/Periods/NewPeriod/NewProject';
+import PeriodList from '../../components/Periods/PeriodList/PeriodList';
 import Modal from '../../components/UI/Modal/Modal';
 import classes from './TrackerView.module.css';
 
@@ -55,43 +55,16 @@ const TrackerView = () => {
 
   useEffect(() => {
     // Active Period ?
-    const storedActivePeriod = localStorage.getItem('dwp_active_period');
-    if (storedActivePeriod) {
-      const parsedActivePeriod = JSON.parse(storedActivePeriod);
-
-      if (isPeriod(parsedActivePeriod)) {
-        const newActivePeriod: Period = {
-          id: parsedActivePeriod.id,
-          start: parsedActivePeriod.start,
-        };
-
-        if (parsedActivePeriod.project) {
-          newActivePeriod.project = parsedActivePeriod.project;
-        }
-
-        if (parsedActivePeriod.description) {
-          newActivePeriod.description = parsedActivePeriod.description;
-        }
-
-        setActivePeriod(newActivePeriod);
-      }
-    }
+    const initialActivePeriod = getInitialActivePeriod();
+    setActivePeriod(initialActivePeriod);
 
     // Periods ?
-    const storedPeriods = localStorage.getItem('dwp_periods');
-    if (storedPeriods) {
-      const parsedPeriods = JSON.parse(storedPeriods);
-      periodsDispatch({ type: 'INIT', newPeriods: parsedPeriods });
-    }
+    const initialPeriods = getInitialPeriods();
+    periodsDispatch({ type: 'INIT', newPeriods: initialPeriods });
 
     // Projects ?
-    const storedProjects = localStorage.getItem('dwp_projects');
-    if (storedProjects) {
-      const parsedProjects = JSON.parse(storedProjects);
-      projectsDispatch({ type: 'INIT', newProjects: parsedProjects });
-    } else {
-      projectsDispatch({ type: 'INIT', newProjects: DUMMY_PROJECTS });
-    }
+    const initialProject = getInitialProjects();
+    projectsDispatch({ type: 'INIT', newProjects: initialProject });
   }, []);
 
   useEffect(() => {
@@ -167,3 +140,52 @@ const TrackerView = () => {
 };
 
 export default TrackerView;
+
+// On extrait la fonction du useEffect pour la rendre plus lisible
+// en la nommant ça permet de mieux comprendre ce qu'elle fait
+const getInitialActivePeriod = () => {
+  const storedActivePeriod = localStorage.getItem('dwp_active_period');
+  if (!storedActivePeriod) {
+    // Early return pattern
+    // ça permet de sortir de la fonction plus tôt et de pas imbriquer le reste du code dans un else
+    return null;
+  }
+
+  const parsedActivePeriod = JSON.parse(storedActivePeriod);
+
+  // on valide le type de la période récupérée car le JSON stringifié est de type any
+  const activePeriodValidation = periodSchema.safeParse(parsedActivePeriod);
+  if (!activePeriodValidation.success) {
+    return null;
+  }
+
+  // on utilise le type validé plutôt que le JSON stringifié qui est de type any
+  return activePeriodValidation.data;
+};
+
+const getInitialPeriods = () => {
+  const storedPeriods = localStorage.getItem('dwp_periods');
+  if (!storedPeriods) {
+    return [];
+  }
+  const parsedPeriods = JSON.parse(storedPeriods);
+  const periodValidation = periodSchema.array().safeParse(parsedPeriods);
+  if (!periodValidation.success) {
+    return [];
+  }
+  return periodValidation.data;
+};
+
+const getInitialProjects = () => {
+  const storedProjects = localStorage.getItem('dwp_projects');
+  if (!storedProjects) {
+    return DUMMY_PROJECTS;
+  }
+
+  const parsedProjects = JSON.parse(storedProjects);
+  const projectValidation = projectSchema.array().safeParse(parsedProjects);
+  if (!projectValidation.success) {
+    return DUMMY_PROJECTS;
+  }
+  return projectValidation.data;
+};
