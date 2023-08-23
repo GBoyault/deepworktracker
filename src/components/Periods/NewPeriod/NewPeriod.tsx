@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Project, Period, ButtonVariant } from '../../../models';
-import ProjectSelect from './ProjectSelect';
+import React, { useEffect, useState } from 'react';
+import { Period, Project } from '../../../models';
 import Button from '../../UI/Button/Button';
 import classes from './NewPeriod.module.css';
-
+import ProjectSelect from './ProjectSelect';
 
 type NewPeriodProp = {
-  projects: Project[],
-  lastCreatedProject: Project | null,
-  onStartPeriod: (newPeriod: Period) => void,
-  onCreateProject: () => void
+  projects: Project[];
+  lastCreatedProject: Project | null;
+  onStartPeriod: (newPeriod: Period) => void;
+  onCreateProject: () => void;
 };
 
 const NewPeriod = (props: NewPeriodProp) => {
@@ -26,15 +25,14 @@ const NewPeriod = (props: NewPeriodProp) => {
     setDescription(e.target.value);
   };
 
-
   const selectProjectHandler = (project: Project | null): void => {
     setSelectedProject(project);
-  }
+  };
 
   const startPeriodHandler = (): void => {
     const newPeriod: Period = {
       id: Date.now().toString(),
-      start: Date.now()
+      start: Date.now(),
     };
 
     if (selectedProject) {
@@ -50,19 +48,20 @@ const NewPeriod = (props: NewPeriodProp) => {
     setSelectedProject(null);
   };
 
-
   return (
     <div className={classes['new-period']}>
       <div className={classes.inner}>
         <h2>Nouvelle période</h2>
-        <input type="text" placeholder='description...' value={description} onChange={descriptionChangeHandler} />
+        <input type='text' placeholder='description...' value={description} onChange={descriptionChangeHandler} />
         <ProjectSelect
           projects={props.projects}
           selectedProject={selectedProject}
           onSelect={selectProjectHandler}
           onCreateProject={props.onCreateProject}
         />
-        <Button onClick={startPeriodHandler} variant={ButtonVariant.BIG}>Commencer</Button>
+        <Button onClick={startPeriodHandler} variant={'BIG'}>
+          Commencer
+        </Button>
       </div>
     </div>
   );
