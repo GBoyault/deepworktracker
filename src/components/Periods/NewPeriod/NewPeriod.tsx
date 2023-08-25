@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Project, Period, ButtonVariant } from '../../../models';
+import { Project, Period } from '../../../models';
 import ProjectSelect from './ProjectSelect';
 import Button from '../../UI/Button/Button';
 import classes from './NewPeriod.module.css';
 
 
 type NewPeriodProp = {
-  projects: Project[],
-  lastCreatedProject: Project | null,
-  onStartPeriod: (newPeriod: Period) => void,
-  onCreateProject: () => void
+  projects: Project[];
+  lastCreatedProject: Project | null;
+  onStartPeriod: (newPeriod: Period) => void;
+  onCreateProject: () => void;
 };
 
-const NewPeriod = (props: NewPeriodProp) => {
+const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject }: NewPeriodProp) => {
   const [description, setDescription] = useState('');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
-    if (props.lastCreatedProject) {
-      setSelectedProject(props.lastCreatedProject);
+    if (lastCreatedProject) {
+      setSelectedProject(lastCreatedProject);
     }
-  }, [props.lastCreatedProject]);
+  }, [lastCreatedProject]);
 
   const descriptionChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setDescription(e.target.value);
@@ -45,7 +45,7 @@ const NewPeriod = (props: NewPeriodProp) => {
       newPeriod.description = description;
     }
 
-    props.onStartPeriod(newPeriod);
+    onStartPeriod(newPeriod);
     setDescription('');
     setSelectedProject(null);
   };
@@ -57,12 +57,12 @@ const NewPeriod = (props: NewPeriodProp) => {
         <h2>Nouvelle période</h2>
         <input type="text" placeholder='description...' value={description} onChange={descriptionChangeHandler} />
         <ProjectSelect
-          projects={props.projects}
+          projects={projects}
           selectedProject={selectedProject}
           onSelect={selectProjectHandler}
-          onCreateProject={props.onCreateProject}
+          onCreateProject={onCreateProject}
         />
-        <Button onClick={startPeriodHandler} variant={ButtonVariant.BIG}>Commencer</Button>
+        <Button onClick={startPeriodHandler} variant={'BIG'}>Commencer</Button>
       </div>
     </div>
   );

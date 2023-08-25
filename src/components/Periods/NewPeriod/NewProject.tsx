@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Project, ButtonVariant } from "../../../models";
+import { Project } from "../../../models";
 import ColorPicker from '../NewPeriod/ColorPicker';
 import Button from "../../UI/Button/Button";
 import classes from './NewProject.module.css';
 
 type NewProjectProps = {
-  onCancel: () => void,
-  onCreateProject: (newProject: Project) => void,
+  onCancel: () => void;
+  onCreateProject: (newProject: Project) => void;
 }
 
 const NewProject = (props: NewProjectProps) => {
@@ -50,7 +50,7 @@ const NewProject = (props: NewProjectProps) => {
       <ColorPicker onChange={colorChangeHandler} />
 
       <div className={classes.actions}>
-        <Button onClick={props.onCancel} variant={ButtonVariant.SECONDARY}>Annuler</Button>
+        <Button onClick={props.onCancel} variant={'SECONDARY'}>Annuler</Button>
         <Button onClick={createProjectHandler} disabled={name.trim() === ''}>Valider</Button>
       </div>
 

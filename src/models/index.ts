@@ -1,16 +1,16 @@
 
-export type Project = {
-  id: string,
-  name: string,
-  color: `#${string}`
+export interface Project {
+  id: string;
+  name: string;
+  color: `#${string}`;
 }
 
-export type Period = {
-  id: string,
-  start: number,
-  end?: number,
-  project?: Project,
-  description?: string
+export interface Period {
+  id: string;
+  start: number;
+  end?: number;
+  project?: Project;
+  description?: string;
 };
 
 export const isPeriod = (obj: any): obj is Period => {
@@ -25,46 +25,45 @@ export const isPeriod = (obj: any): obj is Period => {
 }
 
 
-export type User = {
-  name: string,
-  periods: Period[],
-  projects: Project[],
-}
-
-
-export enum ActionsKind {
-  CREATE = 'CREATE',
-  UPDATE = 'UPDATE',
-  DELETE = 'DELETE',
-  INIT = 'INIT'
-};
+// export enum ActionsKind {
+//   CREATE = 'CREATE',
+//   UPDATE = 'UPDATE',
+//   DELETE = 'DELETE',
+//   INIT = 'INIT'
+// };
 
 export type PeriodsAction = {
-  type: ActionsKind.CREATE;
+  type: 'CREATE';
   newPeriod: Period;
 } | {
-  type: ActionsKind.INIT;
+  type: 'INIT';
   newPeriods: Period[];
 } | {
-  type: ActionsKind.UPDATE;
+  type: 'UPDATE';
   updatedPeriod: Period;
 } | {
-  type: ActionsKind.DELETE;
+  type: 'DELETE';
   periodId: Period['id']
 };
 
+export type PeriodsActionType = PeriodsAction['type'];
+
+
 export type ProjectsAction = {
-  type: ActionsKind.CREATE;
+  type: 'CREATE';
   newProject: Project;
 } | {
-  type: ActionsKind.INIT;
+  type: 'INIT';
   newProjects: Project[];
 };
 
+export type ProjectsActionType = ProjectsAction['type'];
 
-export enum ButtonVariant {
-  BIG = 'big',
-  SMALL = 'small',
-  SECONDARY = 'secondary',
-  SIMPLE = 'simple'
-};
+// export enum ButtonVariant {
+//   BIG = 'big',
+//   SMALL = 'small',
+//   SECONDARY = 'secondary',
+//   SIMPLE = 'simple'
+// };
+
+export type ButtonVariant = 'BIG' | 'SMALL' | 'SECONDARY' | 'SIMPLE';

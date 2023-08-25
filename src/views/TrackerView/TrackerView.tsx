@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Period, isPeriod, Project, ActionsKind, PeriodsAction, ProjectsAction } from '../../models';
+import { Period, isPeriod, Project, PeriodsAction, ProjectsAction } from '../../models';
 
 import { DUMMY_PROJECTS } from '../../utils/dummy-values';
 
@@ -13,16 +13,16 @@ import classes from './TrackerView.module.css';
 
 const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
   switch (action.type) {
-    case ActionsKind.INIT:
+    case 'INIT':
       return action.newPeriods.slice();
 
-    case ActionsKind.CREATE:
+    case 'CREATE':
       return periods.concat(action.newPeriod);
 
-    case ActionsKind.DELETE:
+    case 'DELETE':
       return periods.filter(period => period.id !== action.periodId);
 
-    case ActionsKind.UPDATE:
+    case 'UPDATE':
       const updatedPeriods = periods.slice();
 
       const updatedPeriodIndex = updatedPeriods.findIndex(period => period.id === action.updatedPeriod.id);
@@ -36,10 +36,10 @@ const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
 
 const projectdReducer = (projects: Project[], action: ProjectsAction): Project[] => {
   switch (action.type) {
-    case ActionsKind.CREATE:
+    case 'CREATE':
       return projects.concat(action.newProject)
 
-    case ActionsKind.INIT:
+    case 'INIT':
       return projects.concat(action.newProjects)
   }
 
@@ -83,16 +83,16 @@ const TrackerView = () => {
     const storedPeriods = localStorage.getItem('dwp_periods');
     if (storedPeriods) {
       const parsedPeriods = JSON.parse(storedPeriods);
-      periodsDispatch({ type: ActionsKind.INIT, newPeriods: parsedPeriods })
+      periodsDispatch({ type: 'INIT', newPeriods: parsedPeriods })
     }
 
     // Projects ?
     const storedProjects = localStorage.getItem('dwp_projects');
     if (storedProjects) {
       const parsedProjects = JSON.parse(storedProjects);
-      projectsDispatch({ type: ActionsKind.INIT, newProjects: parsedProjects })
+      projectsDispatch({ type: 'INIT', newProjects: parsedProjects })
     } else {
-      projectsDispatch({ type: ActionsKind.INIT, newProjects: DUMMY_PROJECTS })
+      projectsDispatch({ type: 'INIT', newProjects: DUMMY_PROJECTS })
     }
 
   }, []);
@@ -118,15 +118,15 @@ const TrackerView = () => {
   };
 
   const updatePeriodHandler = (updatedPeriod: Period) => {
-    periodsDispatch({ type: ActionsKind.UPDATE, updatedPeriod });
+    periodsDispatch({ type: 'UPDATE', updatedPeriod });
   }
 
   const deletePeriodHandler = (periodId: string) => {
-    periodsDispatch({ type: ActionsKind.DELETE, periodId });
+    periodsDispatch({ type: 'DELETE', periodId });
   };
 
   const createProjectHandler = (newProject: Project) => {
-    projectsDispatch({ type: ActionsKind.CREATE, newProject });
+    projectsDispatch({ type: 'CREATE', newProject });
     setShowNewProjectModal(false);
     setLastCreatedProject(newProject);
   };
@@ -137,7 +137,7 @@ const TrackerView = () => {
     }
 
     activePeriod.end = Date.now();
-    periodsDispatch({ type: ActionsKind.CREATE, newPeriod: activePeriod });
+    periodsDispatch({ type: 'CREATE', newPeriod: activePeriod });
     setActivePeriod(null);
   }
 

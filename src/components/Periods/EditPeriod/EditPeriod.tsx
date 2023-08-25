@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import moment from 'moment';
 
-import { Project, Period as PeriodType, ButtonVariant } from '../../../models';
+import { Project, Period as PeriodType } from '../../../models';
 import ProjectSelect from '../NewPeriod/ProjectSelect';
 import Button from '../../UI/Button/Button';
 import classes from './EditPeriod.module.css';
 
 type periodProps = {
-  period: PeriodType,
-  projects: Project[],
-  lastCreatedProject: Project | null,
-  onDelete: () => void,
-  onSave: (periodData: PeriodType) => void,
-  onCancel: () => void,
-  onCreateProject: () => void
+  period: PeriodType;
+  projects: Project[];
+  lastCreatedProject: Project | null;
+  onDelete: () => void;
+  onSave: (periodData: PeriodType) => void;
+  onCancel: () => void;
+  onCreateProject: () => void;
 };
 
 const EditPeriod = (props: periodProps) => {
@@ -53,7 +53,7 @@ const EditPeriod = (props: periodProps) => {
 
 
   const descriptionChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setDescription(e.target.value)
+    setDescription(e.target.value);
   };
 
   const selectProjectHandler = (project: Project | null): void => {
@@ -127,8 +127,8 @@ const EditPeriod = (props: periodProps) => {
         onCreateProject={props.onCreateProject}
       />
       <div className={classes.actions}>
-        <Button onClick={props.onDelete} variant={ButtonVariant.SIMPLE}>Supprimer la période</Button>
-        <Button onClick={props.onCancel} variant={ButtonVariant.SECONDARY}>Annuler</Button>
+        <Button onClick={props.onDelete} variant={'SIMPLE'}>Supprimer la période</Button>
+        <Button onClick={props.onCancel} variant={'SECONDARY'}>Annuler</Button>
         <Button onClick={saveChangesHandler} disabled={!end || start > end}>Enregistrer</Button>
       </div>
     </div>
