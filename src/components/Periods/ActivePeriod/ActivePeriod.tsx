@@ -3,6 +3,7 @@ import { Period } from '../../../models';
 
 import Button from '../../UI/Button/Button';
 import classes from './ActivePeriod.module.css';
+import useDocumentTitle from '../../../views/TrackerView/useDocumentTitle';
 
 type ActivePeriodProps = {
   period: Period,
@@ -17,7 +18,7 @@ const ActivePeriod = (props: ActivePeriodProps) => {
     const nowInSecond = Math.ceil(Date.now() / 1000);
     const startInSecond = Math.ceil(props.period.start / 1000);
 
-    setCount(nowInSecond - startInSecond)
+    setCount(nowInSecond - startInSecond);
   }, [props.period.start]);
 
   useEffect(() => {
@@ -36,10 +37,14 @@ const ActivePeriod = (props: ActivePeriodProps) => {
     useGrouping: false
   });
 
+  const formattedCount = `${minutes}:${twoDigitsSeconds}`;
+
+  useDocumentTitle(`Tracking: ${formattedCount}`);
+
   return (
     <div className={classes['active-period']}>
       <div className={classes.timer}>
-        {minutes}:{twoDigitsSeconds}
+        {formattedCount}
       </div>
       <div className={classes.actions}>
         <Button onClick={props.onClick}>Arrêter</Button>
