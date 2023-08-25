@@ -1,35 +1,37 @@
+import { z } from 'zod';
 
-export interface Project {
-  id: string;
-  name: string;
-  color: `#${string}`;
-}
+const colorSchema = z.string().regex(/^#[0-9a-fA-F]{6}$/);
 
-export interface Period {
-  id: string;
-  start: number;
-  end?: number;
-  project?: Project;
-  description?: string;
-};
+export const projectSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  color: colorSchema
+});
 
-export const isPeriod = (obj: any): obj is Period => {
-  if (!obj || typeof obj !== 'object') {
-    return false;
-  }
+export type Project = z.infer<typeof projectSchema>;
 
-  const hasId = obj.id !== undefined && typeof (obj as Period).id === 'string';
-  const hasStart = obj.start !== undefined && typeof (obj as Period).start === 'number';
+// export interface Project {
+// id: string;
+// name: string;
+// color: `#${string}`;
+// }
 
-  return hasId && hasStart;
-}
+export const periodSchema = z.object({
+  id: z.string(),
+  start: z.number(),
+  end: z.number().optional(),
+  project: projectSchema.optional(),
+  description: z.string().optional(),
+});
 
+export type Period = z.infer<typeof periodSchema>;
 
-// export enum ActionsKind {
-//   CREATE = 'CREATE',
-//   UPDATE = 'UPDATE',
-//   DELETE = 'DELETE',
-//   INIT = 'INIT'
+// export interface Period {
+//   id: string;
+//   start: number;
+//   end?: number;
+//   project?: Project;
+//   description?: string;
 // };
 
 export type PeriodsAction = {
@@ -58,12 +60,5 @@ export type ProjectsAction = {
 };
 
 export type ProjectsActionType = ProjectsAction['type'];
-
-// export enum ButtonVariant {
-//   BIG = 'big',
-//   SMALL = 'small',
-//   SECONDARY = 'secondary',
-//   SIMPLE = 'simple'
-// };
 
 export type ButtonVariant = 'BIG' | 'SMALL' | 'SECONDARY' | 'SIMPLE';

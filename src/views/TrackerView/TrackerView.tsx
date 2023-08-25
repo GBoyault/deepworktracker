@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Period, isPeriod, Project, PeriodsAction, ProjectsAction } from '../../models';
+import { Period, PeriodsAction, Project, ProjectsAction, periodSchema, projectSchema } from '../../models';
 
 import { DUMMY_PROJECTS } from '../../utils/dummy-values';
 
@@ -34,6 +34,7 @@ const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
   return periods;
 };
 
+
 const projectdReducer = (projects: Project[], action: ProjectsAction): Project[] => {
   switch (action.type) {
     case 'CREATE':
@@ -57,61 +58,31 @@ const TrackerView = () => {
 
   useEffect(() => {
     // Active Period ?
-    const storedActivePeriod = localStorage.getItem('dwp_active_period');
-    if (storedActivePeriod) {
-      const parsedActivePeriod = JSON.parse(storedActivePeriod);
-
-      if (isPeriod(parsedActivePeriod)) {
-        const newActivePeriod: Period = {
-          id: parsedActivePeriod.id,
-          start: parsedActivePeriod.start
-        };
-
-        if (parsedActivePeriod.project) {
-          newActivePeriod.project = parsedActivePeriod.project;
-        }
-
-        if (parsedActivePeriod.description) {
-          newActivePeriod.description = parsedActivePeriod.description;
-        }
-
-        setActivePeriod(newActivePeriod);
-      }
-    }
+    const initialActivePeriod = getInitialActivePeriod();
+    setActivePeriod(initialActivePeriod);
 
     // Periods ?
-    const storedPeriods = localStorage.getItem('dwp_periods');
-    if (storedPeriods) {
-      const parsedPeriods = JSON.parse(storedPeriods);
-      periodsDispatch({ type: 'INIT', newPeriods: parsedPeriods })
-    }
+    const initialPeriods = getInitialPeriods();
+    periodsDispatch({ type: 'INIT', newPeriods: initialPeriods })
 
     // Projects ?
-    const storedProjects = localStorage.getItem('dwp_projects');
-    if (storedProjects) {
-      const parsedProjects = JSON.parse(storedProjects);
-      projectsDispatch({ type: 'INIT', newProjects: parsedProjects })
-    } else {
-      projectsDispatch({ type: 'INIT', newProjects: DUMMY_PROJECTS })
-    }
-
+    const initialProjects = getInitialProjects();
+    projectsDispatch({ type: 'INIT', newProjects: initialProjects })
   }, []);
 
 
-
   useEffect(() => {
-    localStorage.setItem('dwp_projects', JSON.stringify(projects));
+    localStorage.setItem('dwt_projects', JSON.stringify(projects));
   }, [projects]);
 
   useEffect(() => {
-    localStorage.setItem('dwp_periods', JSON.stringify(periods));
+    localStorage.setItem('dwt_periods', JSON.stringify(periods));
   }, [periods]);
 
   useEffect(() => {
-    localStorage.setItem('dwp_active_period', JSON.stringify(activePeriod));
+    localStorage.setItem('dwt_active_period', JSON.stringify(activePeriod));
   }, [activePeriod]);
 
-  
 
   const startPeriodHandler = (newPeriod: Period) => {
     setActivePeriod(newPeriod);
@@ -183,3 +154,52 @@ const TrackerView = () => {
 }
 
 export default TrackerView;
+
+
+const getInitialActivePeriod = () => {
+  const storedActivePeriod = localStorage.getItem('dwt_active_period');
+  if (!storedActivePeriod) {
+    return null;
+  }
+
+  const parsedActivePeriod = JSON.parse(storedActivePeriod);
+  const activePeriodValidation = periodSchema.safeParse(parsedActivePeriod);
+
+  if (!activePeriodValidation.success) {
+    return null;
+  }
+
+  return activePeriodValidation.data;
+};
+
+const getInitialPeriods = () => {
+  const storedPeriods = localStorage.getItem('dwt_periods');
+  if (!storedPeriods) {
+    return [];
+  }
+
+  const parsedPeriods = JSON.parse(storedPeriods);
+  const periodsValidation = periodSchema.array().safeParse(parsedPeriods);
+
+  if (!periodsValidation.success) {
+    return [];
+  }
+
+  return periodsValidation.data;
+};
+
+
+const getInitialProjects = () => {
+  const storedProjects = localStorage.getItem('dwt_projects');
+  if (!storedProjects) {
+    return DUMMY_PROJECTS;
+  }
+
+  const parsedProjects = JSON.parse(storedProjects);
+  const projectsValidation = projectSchema.array().safeParse(parsedProjects);
+  if (!projectsValidation.success) {
+    return DUMMY_PROJECTS;
+  }
+
+  return projectsValidation.data;
+};
