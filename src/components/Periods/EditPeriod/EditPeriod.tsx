@@ -1,77 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import moment from 'moment';
+import React, { useState, useEffect } from 'react'
+import { TimePicker } from '@mui/x-date-pickers/TimePicker'
+import moment from 'moment'
 
-import { Project, Period as PeriodType } from '../../../models';
-import ProjectSelect from '../NewPeriod/ProjectSelect';
-import Button from '../../UI/Button/Button';
-import classes from './EditPeriod.module.css';
+import { type Project, type Period as PeriodType } from '../../../models'
+import ProjectSelect from '../NewPeriod/ProjectSelect'
+import Button from '../../UI/Button/Button'
+import classes from './EditPeriod.module.css'
 
-type periodProps = {
-  period: PeriodType;
-  projects: Project[];
-  lastCreatedProject: Project | null;
-  onDelete: () => void;
-  onSave: (periodData: PeriodType) => void;
-  onCancel: () => void;
-  onCreateProject: () => void;
-};
+interface periodProps {
+  period: PeriodType
+  projects: Project[]
+  lastCreatedProject: Project | null
+  onDelete: () => void
+  onSave: (periodData: PeriodType) => void
+  onCancel: () => void
+  onCreateProject: () => void
+}
 
 const EditPeriod = (props: periodProps) => {
-  const [description, setDescription] = useState('');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState<number | undefined>(0);
+  const [description, setDescription] = useState('')
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [start, setStart] = useState(0)
+  const [end, setEnd] = useState<number | undefined>(0)
 
   const {
     description: initialDescription,
     project: initialProject,
     start: initialStart,
-    end: initialEnd,
-  } = props.period;
+    end: initialEnd
+  } = props.period
 
   useEffect(() => {
-    setStart(initialStart);
-    setEnd(initialEnd);
+    setStart(initialStart)
+    setEnd(initialEnd)
 
     if (initialDescription) {
-      setDescription(initialDescription);
+      setDescription(initialDescription)
     }
 
     if (initialProject) {
-      setSelectedProject(initialProject);
+      setSelectedProject(initialProject)
     }
+  }, [initialDescription, initialProject, initialStart, initialEnd])
 
-  }, [initialDescription, initialProject, initialStart, initialEnd]);
-
-  
   useEffect(() => {
     if (props.lastCreatedProject) {
-      setSelectedProject(props.lastCreatedProject);
+      setSelectedProject(props.lastCreatedProject)
     }
-  }, [props.lastCreatedProject]);
-
+  }, [props.lastCreatedProject])
 
   const descriptionChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setDescription(e.target.value);
-  };
+    setDescription(e.target.value)
+  }
 
   const selectProjectHandler = (project: Project | null): void => {
-    setSelectedProject(project);
+    setSelectedProject(project)
   }
 
   const startChangeHandler = (updatedStart: moment.Moment | null) => {
     if (updatedStart) {
-      setStart(+updatedStart.format('x'));
+      setStart(+updatedStart.format('x'))
     }
   }
 
   const endChangeHandler = (updatedEnd: moment.Moment | null) => {
     if (updatedEnd) {
-      setEnd(+updatedEnd.format('x'));
+      setEnd(+updatedEnd.format('x'))
     }
   }
-
 
   const saveChangesHandler = () => {
     const updatedPeriodData: PeriodType = {
@@ -79,38 +75,38 @@ const EditPeriod = (props: periodProps) => {
       description,
       start,
       end
-    };
+    }
 
     if (selectedProject) {
       updatedPeriodData.project = selectedProject
     } else if (props.period.project) {
-      delete updatedPeriodData.project;
+      delete updatedPeriodData.project
     }
 
-    props.onSave(updatedPeriodData);
+    props.onSave(updatedPeriodData)
   }
 
-  const dateStart = moment(start);
-  const dateEnd = moment(end);
+  const dateStart = moment(start)
+  const dateEnd = moment(end)
 
   return (
     <div className={classes['edit-period']}>
       <h2>Éditer la période</h2>
       <div className={classes.dates}>
-        <DateTimePicker
+        <TimePicker
           label="Début"
           ampm={false}
           value={dateStart}
           format='HH:mm'
           onChange={startChangeHandler}
         />
-        <DateTimePicker
+        <TimePicker
           label="Fin"
           value={dateEnd}
           ampm={false}
           format='HH:mm'
           onChange={endChangeHandler}
-          minDateTime={dateStart}
+          minTime={dateStart}
         />
       </div>
       <input
@@ -133,6 +129,6 @@ const EditPeriod = (props: periodProps) => {
       </div>
     </div>
   )
-};
+}
 
-export default EditPeriod;
+export default EditPeriod

@@ -1,6 +1,6 @@
-import { Outlet } from "react-router-dom";
-import Header from "../../components/Layout/Header/Header";
-import styles from './RootView.module.css';
+import { Outlet } from 'react-router-dom'
+import Header from '../../components/Layout/Header/Header'
+import styles from './RootView.module.css'
 
 const RootView = () => {
   return (
@@ -13,4 +13,4 @@ const RootView = () => {
   )
 }
 
-export default RootView;
+export default RootView

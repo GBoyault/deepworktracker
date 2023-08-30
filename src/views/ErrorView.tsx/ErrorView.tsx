@@ -1,4 +1,4 @@
-import Header from "../../components/Layout/Header/Header";
+import Header from '../../components/Layout/Header/Header'
 
 const ErrorView = () => {
   return (
@@ -6,7 +6,7 @@ const ErrorView = () => {
       <Header />
       <h1>Error 404!</h1>
     </>
-  );
-};
+  )
+}
 
-export default ErrorView;
+export default ErrorView

@@ -3,5 +3,5 @@
   display: flex;
   flex-direction: column;
   /* background-color: #d7ddff; */
-  background-color: #241838;
+  background-color: var(--color-background);
 }

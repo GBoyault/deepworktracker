@@ -1,52 +1,52 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { Period, Project } from '../../models';
-import { useProjects } from './useProjects';
-import { usePeriods } from './usePeriods';
-import { useActivePeriod } from './useActivePeriod';
+import { type Period, type Project } from '../../models'
+import { useProjects } from '../../hooks/useProjects'
+import { usePeriods } from '../../hooks/usePeriods'
+import { useActivePeriod } from '../../hooks/useActivePeriod'
 
-import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod';
-import PeriodList from '../../components/Periods/PeriodList/PeriodList';
-import NewProject from '../../components/Periods/NewPeriod/NewProject';
-import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod';
-import Modal from '../../components/UI/Modal/Modal';
-import classes from './TrackerView.module.css';
-
+import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod'
+import PeriodList from '../../components/Periods/PeriodList/PeriodList'
+import PeriodListPlaceholder from '../../components/Periods/PeriodList/PeriodListPlaceholder'
+import NewProject from '../../components/Periods/NewPeriod/NewProject'
+import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod'
+import Modal from '../../components/UI/Modal/Modal'
+import classes from './TrackerView.module.css'
 
 const TrackerView = () => {
-  const [projects, projectsDispatch] = useProjects();
-  const [periods, periodsDispatch] = usePeriods();
-  const [activePeriod, setActivePeriod] = useActivePeriod();
+  const [projects, projectsDispatch] = useProjects()
+  const [periods, periodsDispatch] = usePeriods()
+  const [activePeriod, setActivePeriod] = useActivePeriod()
 
-  const [showNewProjectModal, setShowNewProjectModal] = useState(false);
-  const [lastCreatedProject, setLastCreatedProject] = useState<Project | null>(null);
+  const [showNewProjectModal, setShowNewProjectModal] = useState(false)
+  const [lastCreatedProject, setLastCreatedProject] = useState<Project | null>(null)
 
   const startPeriodHandler = (newPeriod: Period) => {
-    setActivePeriod(newPeriod);
-  };
+    setActivePeriod(newPeriod)
+  }
 
   const updatePeriodHandler = (updatedPeriod: Period) => {
-    periodsDispatch({ type: 'UPDATE', updatedPeriod });
+    periodsDispatch({ type: 'UPDATE', updatedPeriod })
   }
 
   const deletePeriodHandler = (periodId: string) => {
-    periodsDispatch({ type: 'DELETE', periodId });
-  };
+    periodsDispatch({ type: 'DELETE', periodId })
+  }
 
   const createProjectHandler = (newProject: Project) => {
-    projectsDispatch({ type: 'CREATE', newProject });
-    setShowNewProjectModal(false);
-    setLastCreatedProject(newProject);
-  };
+    projectsDispatch({ type: 'CREATE', newProject })
+    setShowNewProjectModal(false)
+    setLastCreatedProject(newProject)
+  }
 
   const stopPeriodHandler = () => {
     if (!activePeriod) {
-      return;
+      return
     }
 
-    activePeriod.end = Date.now();
-    periodsDispatch({ type: 'CREATE', newPeriod: activePeriod });
-    setActivePeriod(null);
+    const newPeriod = { ...activePeriod, end: Date.now() }
+    periodsDispatch({ type: 'CREATE', newPeriod })
+    setActivePeriod(null)
   }
 
   return (
@@ -63,23 +63,22 @@ const TrackerView = () => {
             projects={projects}
             lastCreatedProject={lastCreatedProject}
             onStartPeriod={startPeriodHandler}
-            onCreateProject={() => setShowNewProjectModal(true)}
+            onCreateProject={() => { setShowNewProjectModal(true) }}
           />
-          {periods.length > 0 && (
-            <PeriodList
+          {periods.length > 0
+            ? <PeriodList
               periods={periods}
               onDeletePeriod={deletePeriodHandler}
               lastCreatedProject={lastCreatedProject}
               projects={projects}
-              onCreateProject={() => setShowNewProjectModal(true)}
+              onCreateProject={() => { setShowNewProjectModal(true) }}
               onUpdatePeriod={updatePeriodHandler}
             />
-          )}
+            : <PeriodListPlaceholder />
+          }
           {showNewProjectModal && (
-            <Modal onClose={() => setShowNewProjectModal(false)}>
-              <NewProject
-                onCreateProject={createProjectHandler}
-                onCancel={() => setShowNewProjectModal(false)}
+            <Modal onClose={() => { setShowNewProjectModal(false) }}>
+              <NewProject onCreateProject={createProjectHandler} onCancel={() => { setShowNewProjectModal(false) }}
               />
             </Modal>
           )}
@@ -87,7 +86,7 @@ const TrackerView = () => {
       )}
 
     </div>
-  );
+  )
 }
 
-export default TrackerView;
+export default TrackerView

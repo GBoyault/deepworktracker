@@ -4,3 +4,11 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+@media (max-width: 768px) {
+  .tracker-view {    
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 10rem;
+  }
+}

@@ -1,39 +1,36 @@
-import { useState } from "react";
-import { Project } from "../../../models";
-import ColorPicker from '../NewPeriod/ColorPicker';
-import Button from "../../UI/Button/Button";
-import classes from './NewProject.module.css';
+import { useState } from 'react'
+import { type Project } from '../../../models'
+import ColorPicker from '../NewPeriod/ColorPicker'
+import Button from '../../UI/Button/Button'
+import classes from './NewProject.module.css'
 
-type NewProjectProps = {
-  onCancel: () => void;
-  onCreateProject: (newProject: Project) => void;
+interface NewProjectProps {
+  onCancel: () => void
+  onCreateProject: (newProject: Project) => void
 }
 
 const NewProject = (props: NewProjectProps) => {
-  const [color, setColor] = useState<Project['color']>('#f44336');
-  const [name, setName] = useState<Project['name']>('');
-
+  const [color, setColor] = useState<Project['color']>('#f44336')
+  const [name, setName] = useState<Project['name']>('')
 
   const createProjectHandler = () => {
     const newProject: Project = {
       id: Date.now().toString(),
       color,
       name: name.trim()
-    };
+    }
 
-    props.onCreateProject(newProject);
-    setName('');
-  };
-
-
-  const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const colorChangeHandler = (color: Project['color']) => {
-    setColor(color);
+    props.onCreateProject(newProject)
+    setName('')
   }
 
+  const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+  }
+
+  const colorChangeHandler = (color: Project['color']) => {
+    setColor(color)
+  }
 
   return (
     <div className={classes['new-project']}>
@@ -56,6 +53,6 @@ const NewProject = (props: NewProjectProps) => {
 
     </div>
   )
-};
+}
 
-export default NewProject;
+export default NewProject

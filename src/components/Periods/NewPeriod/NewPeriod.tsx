@@ -1,55 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { Project, Period } from '../../../models';
-import ProjectSelect from './ProjectSelect';
-import Button from '../../UI/Button/Button';
-import classes from './NewPeriod.module.css';
+import React, { useState, useEffect } from 'react'
+import { type Project, type Period } from '../../../models'
+import ProjectSelect from './ProjectSelect'
+import Button from '../../UI/Button/Button'
+import classes from './NewPeriod.module.css'
 
-
-type NewPeriodProp = {
-  projects: Project[];
-  lastCreatedProject: Project | null;
-  onStartPeriod: (newPeriod: Period) => void;
-  onCreateProject: () => void;
-};
+interface NewPeriodProp {
+  projects: Project[]
+  lastCreatedProject: Project | null
+  onStartPeriod: (newPeriod: Period) => void
+  onCreateProject: () => void
+}
 
 const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject }: NewPeriodProp) => {
-  const [description, setDescription] = useState('');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [description, setDescription] = useState('')
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   useEffect(() => {
     if (lastCreatedProject) {
-      setSelectedProject(lastCreatedProject);
+      setSelectedProject(lastCreatedProject)
     }
-  }, [lastCreatedProject]);
+  }, [lastCreatedProject])
 
   const descriptionChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setDescription(e.target.value);
-  };
-
+    setDescription(e.target.value)
+  }
 
   const selectProjectHandler = (project: Project | null): void => {
-    setSelectedProject(project);
+    setSelectedProject(project)
   }
 
   const startPeriodHandler = (): void => {
     const newPeriod: Period = {
       id: Date.now().toString(),
       start: Date.now()
-    };
+    }
 
     if (selectedProject) {
-      newPeriod.project = selectedProject;
+      newPeriod.project = selectedProject
     }
 
     if (description.trim().length > 0) {
-      newPeriod.description = description;
+      newPeriod.description = description
     }
 
-    onStartPeriod(newPeriod);
-    setDescription('');
-    setSelectedProject(null);
-  };
-
+    onStartPeriod(newPeriod)
+    setDescription('')
+    setSelectedProject(null)
+  }
 
   return (
     <div className={classes['new-period']}>
@@ -65,7 +62,7 @@ const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProjec
         <Button onClick={startPeriodHandler} variant={'BIG'}>Commencer</Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewPeriod;
+export default NewPeriod

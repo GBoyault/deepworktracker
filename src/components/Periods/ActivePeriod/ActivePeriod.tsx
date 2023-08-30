@@ -1,45 +1,44 @@
-import { useEffect, useState } from 'react';
-import { Period } from '../../../models';
+import { useEffect, useState } from 'react'
+import { type Period } from '../../../models'
 
-import Button from '../../UI/Button/Button';
-import classes from './ActivePeriod.module.css';
-import useDocumentTitle from '../../../views/TrackerView/useDocumentTitle';
+import Button from '../../UI/Button/Button'
+import classes from './ActivePeriod.module.css'
+import useDocumentTitle from '../../../hooks/useDocumentTitle'
 
-type ActivePeriodProps = {
-  period: Period,
+interface ActivePeriodProps {
+  period: Period
   onClick: () => void
-};
-
+}
 
 const ActivePeriod = (props: ActivePeriodProps) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const nowInSecond = Math.ceil(Date.now() / 1000);
-    const startInSecond = Math.ceil(props.period.start / 1000);
+    const nowInSecond = Math.ceil(Date.now() / 1000)
+    const startInSecond = Math.ceil(props.period.start / 1000)
 
-    setCount(nowInSecond - startInSecond);
-  }, [props.period.start]);
+    setCount(nowInSecond - startInSecond)
+  }, [props.period.start])
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCount(prevCount => prevCount + 1)
     }, 1000)
 
-    return () => clearInterval(timer);
-  });
+    return () => { clearInterval(timer) }
+  })
 
-  const minutes = Math.floor(count / 60);
-  const seconds = count % 60;
+  const minutes = Math.floor(count / 60)
+  const seconds = count % 60
 
   const twoDigitsSeconds = seconds.toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
-  });
+  })
 
-  const formattedCount = `${minutes}:${twoDigitsSeconds}`;
+  const formattedCount = `${minutes}:${twoDigitsSeconds}`
 
-  useDocumentTitle(`Tracking: ${formattedCount}`);
+  useDocumentTitle(`Tracking: ${formattedCount}`)
 
   return (
     <div className={classes['active-period']}>
@@ -53,4 +52,4 @@ const ActivePeriod = (props: ActivePeriodProps) => {
   )
 }
 
-export default ActivePeriod;
+export default ActivePeriod

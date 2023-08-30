@@ -4,11 +4,15 @@ const AboutView = () => {
   return (
     <div className={classes['about-view']}>
       <h2>À propos</h2>
-      <p>Web app de time tracking, orienté autour du concept de deep work de <a href='https://calnewport.com/' rel='noreferrer' target='_blank'>Cal Newport</a>, pour noter son temps de concentration profonde sur une journée de travail.</p>
-      <p>Projet en cours de réalisation, pour me former à React + TypeScript.</p>
-      <p>Réalisation : <a href='https://gabrielboyault.com/' target='_blank'>Gabriel Boyault</a><br /></p>
+      <p>Web app de time tracking, orientée autour du concept de deep work de <a href='https://calnewport.com/' rel='noreferrer' target='_blank'>Cal Newport</a>, pour noter son temps de concentration profonde sur une journée de travail et idéalement de l'améliorer.</p>
+      <p>Les périodes de moins de 15 minutes sont considérées comme des interruptions, des périodes trop courtes pour permettre une réflexion efficace.</p>
+      <h2>Technos</h2>
+      <p>React + TypeScript. Actuellement les données sont stockées en localStorage et ne sont prises en compte qu'une journée. Dans un futur incertain j'aimerais implémenter un système de compte utilisateurs et une vue tableau de bord, peut-être avec Firebase comme base de donnée. </p>
+      <br />
+      <p>Réalisation : <a href='https://gabrielboyault.com/' target='_blank' rel="noreferrer">Gabriel Boyault</a><br />
+      Code : <a href='https://github.com/GBoyault/deep-work-tracking/' target='_blank' rel="noreferrer">github</a></p>
     </div>
-  );
+  )
 }
 
-export default AboutView;
+export default AboutView

@@ -4,33 +4,8 @@
   padding-top: 10rem;
 }
 
-.period-list header {
-  text-align: center;
-}
-
-.period-list h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-  font-weight: 300;
-  text-transform: uppercase;
-  color: var(--color-green);
-}
-
-.details {
-  color: #fff;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
-
-.success, .failure {
-  font-size: 1.2em;
-  font-weight: 700;
-}
-
-.success {
-  color: var(--color-green);
-}
-
-.failure {
-  color: var(--color-error);
+@media (max-width: 768px) {
+  .period-list {
+    padding-top: 0.5rem;
+  }
 }

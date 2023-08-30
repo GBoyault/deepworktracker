@@ -1,0 +1,23 @@
+.placeholder {
+  width: 23rem;
+  align-self: flex-end;
+  padding-top: 10rem;
+  border-radius: 1rem;
+  border: 2px dashed #cdcdcd57;
+  padding: 0.75em;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.placeholder p {
+  padding: 0 .5rem;
+  text-align: center;
+  color: #cdcdcd57;
+}
+
+.empty-period {
+  background-color: #cdcdcd28;
+  height: 4.5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+}

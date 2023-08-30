@@ -14,7 +14,7 @@
 }
 
 .period--too-short {
-  border-color: var(--color-error);
+  border-color: var(--color-error-transparent);
 }
 
 .period:hover {
@@ -44,7 +44,7 @@
 }
 
 .period--too-short .duration {
-  background-color: var(--color-error);
+  background-color: var(--color-error-transparent);
 }
 
 .content {

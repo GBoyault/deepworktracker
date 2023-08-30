@@ -1,30 +1,28 @@
-import { useState } from "react";
-import { Project } from "../../../models";
-import classes from './ProjectSelect.module.css';
+import { useState } from 'react'
+import { type Project } from '../../../models'
+import classes from './ProjectSelect.module.css'
 
-
-type periodProps = {
-  projects: Project[],
+interface periodProps {
+  projects: Project[]
   selectedProject: Project | null
   onSelect: (selectedProject: Project | null) => void
   onCreateProject: () => void
-};
-
+}
 
 const ProjectSelect = (props: periodProps) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
 
   const expandProjectsHandler = (): void => {
-    setExpanded(prevExpanded => !prevExpanded);
+    setExpanded(prevExpanded => !prevExpanded)
   }
 
   const selectNoProjetHandler = () => {
-    props.onSelect(null);
+    props.onSelect(null)
   }
 
   const selection = props.selectedProject
     ? props.selectedProject.name
-    : 'Choisir un project';
+    : 'Choisir un project'
 
   const projectsList = props.projects.map(project => (
     <li
@@ -36,9 +34,7 @@ const ProjectSelect = (props: periodProps) => {
     >
       {project.name}
     </li>
-  ));
-
-
+  ))
 
   return (
     <div
@@ -74,6 +70,6 @@ const ProjectSelect = (props: periodProps) => {
 
     </div>
   )
-};
+}
 
-export default ProjectSelect;
+export default ProjectSelect
