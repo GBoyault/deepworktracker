@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { type PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
 import classes from './Modal.module.css'
@@ -7,13 +8,31 @@ interface ModalProps {
 }
 
 const Backdrop = (props: ModalProps) => {
-  return <div className={classes.backdrop} onClick={props.onClose}></div>
+  return <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className={classes.backdrop}
+    onClick={props.onClose}
+  />
 }
 
 const ModalOverlay = (props: PropsWithChildren) => {
-  return <div className={classes.modal}>
-    <div className={classes.content}>{props.children}</div>
-  </div>
+  return (
+    <motion.div
+      variants={{
+        hidden: { y: -30, opacity: 0 },
+        visible: { y: 0, opacity: 1 }
+      }}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      transition={{ duration: 0.25 }}
+      className={classes.modal}
+    >
+      <div className={classes.content}>{props.children}</div>
+    </motion.div>
+  )
 }
 
 const Modal = (props: PropsWithChildren<ModalProps>) => {

@@ -17,6 +17,28 @@
   border-color: var(--color-error-transparent);
 }
 
+.period--last {
+  animation: flash 0.5s ease-out 0.25s forwards ;
+  transform-origin: right;
+  transform: scale(0.7);
+  opacity: 0;
+}
+
+@keyframes flash {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .period:hover {
   /* box-shadow: 2px 2px 20px rgba(199, 199, 199, 0.856); */
   border-color: #ececec;
@@ -32,7 +54,7 @@
 
   color: #fff;
   clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 100% 100%, 0% 100%);
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 .period:hover .duration {

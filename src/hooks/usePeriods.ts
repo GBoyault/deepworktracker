@@ -38,7 +38,7 @@ const periodReducer = (periods: Period[], action: PeriodsAction): Period[] => {
       return action.newPeriods.slice()
 
     case 'CREATE':
-      return periods.concat(action.newPeriod)
+      return [action.newPeriod, ...periods]
 
     case 'DELETE':
       return periods.filter((period) => period.id !== action.periodId)

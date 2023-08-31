@@ -9,10 +9,17 @@ interface DailySummaryProp {
 const DailySummary = ({ periods }: DailySummaryProp) => {
   const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end))
   const interruptions = periodDurations.filter(duration => duration.isTooShort)
+
   const totalDurationInMinuts = periodDurations.reduce((acc, cur) => {
     return acc + cur.diffInMinuts
   }, 0)
-  const formattedTotal = PeriodDuration.formatDuration(totalDurationInMinuts)
+  const interruptionsDuration = interruptions.reduce((acc, cur) => {
+    return acc + cur.diffInMinuts
+  }, 0)
+
+  const formattedTotal = PeriodDuration.formatDuration(
+    totalDurationInMinuts - interruptionsDuration
+  )
 
   return (
     <header className={classes['daily-summary']}>

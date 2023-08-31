@@ -1,10 +1,20 @@
+import { NavLink } from 'react-router-dom'
 import Header from '../../components/Layout/Header/Header'
+import classes from './ErrorView.module.css'
 
 const ErrorView = () => {
   return (
     <>
       <Header />
-      <h1>Error 404!</h1>
+      <main className={classes.main}>
+        <div className={classes['error-view']}>
+          <h2>Erreur 404</h2>
+          <p>La page que vous recherchez ne semble pas exister.</p>
+          <NavLink to="/">
+            → Retourner au tracker
+          </NavLink>
+        </div>
+      </main>
     </>
   )
 }

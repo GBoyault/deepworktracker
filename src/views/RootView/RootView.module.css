@@ -2,6 +2,6 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  /* background-color: #d7ddff; */
   background-color: var(--color-background);
+  overflow-x: hidden;
 }

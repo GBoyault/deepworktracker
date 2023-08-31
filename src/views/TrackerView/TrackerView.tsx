@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { AnimatePresence, motion } from 'framer-motion'
 import { type Period, type Project } from '../../models'
 import { useProjects } from '../../hooks/useProjects'
 import { usePeriods } from '../../hooks/usePeriods'
@@ -50,42 +50,57 @@ const TrackerView = () => {
   }
 
   return (
-    <div className={classes['tracker-view']}>
-      {activePeriod && (
-        <ActivePeriod
-          period={activePeriod}
-          onClick={stopPeriodHandler}
-        />
-      )}
-      {!activePeriod && (
-        <>
-          <NewPeriod
-            projects={projects}
-            lastCreatedProject={lastCreatedProject}
-            onStartPeriod={startPeriodHandler}
-            onCreateProject={() => { setShowNewProjectModal(true) }}
+    <motion.div
+      className={classes['tracker-view']}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <AnimatePresence mode='wait'>
+        {activePeriod && (
+          <ActivePeriod
+            key='tracking'
+            period={activePeriod}
+            onClick={stopPeriodHandler}
           />
-          {periods.length > 0
-            ? <PeriodList
-              periods={periods}
-              onDeletePeriod={deletePeriodHandler}
-              lastCreatedProject={lastCreatedProject}
+        )}
+        {!activePeriod && (
+          <motion.div
+            key='not-tracking'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <NewPeriod
               projects={projects}
+              lastCreatedProject={lastCreatedProject}
+              onStartPeriod={startPeriodHandler}
               onCreateProject={() => { setShowNewProjectModal(true) }}
-              onUpdatePeriod={updatePeriodHandler}
             />
-            : <PeriodListPlaceholder />
-          }
-          {showNewProjectModal && (
-            <Modal onClose={() => { setShowNewProjectModal(false) }}>
-              <NewProject onCreateProject={createProjectHandler} onCancel={() => { setShowNewProjectModal(false) }}
+            {periods.length > 0
+              ? <PeriodList
+                periods={periods}
+                onDeletePeriod={deletePeriodHandler}
+                lastCreatedProject={lastCreatedProject}
+                projects={projects}
+                onCreateProject={() => { setShowNewProjectModal(true) }}
+                onUpdatePeriod={updatePeriodHandler}
               />
-            </Modal>
-          )}
-        </>
-      )}
-
-    </div>
+              : <PeriodListPlaceholder />
+            }
+            <AnimatePresence>
+              {showNewProjectModal && (
+                <Modal onClose={() => { setShowNewProjectModal(false) }}>
+                  <NewProject onCreateProject={createProjectHandler} onCancel={() => { setShowNewProjectModal(false) }}
+                  />
+                </Modal>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   )
 }
 

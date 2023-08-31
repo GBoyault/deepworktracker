@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AnimatePresence } from 'framer-motion'
 
 import { type Project, type Period as PeriodType } from '../../../models'
 import Period from '../Period/Period'
 import DailySummary from './DailySummary'
 import Modal from '../../UI/Modal/Modal'
 import EditPeriod from '../EditPeriod/EditPeriod'
+
 import classes from './PeriodList.module.css'
 
 interface PeriodListProp {
@@ -40,31 +42,34 @@ const PeriodList = (props: PeriodListProp) => {
 
   return (
     <>
-      <div className={classes['period-list']}>
+      <div className={classes['period-list']} >
         <DailySummary periods={periods} />
-        {periods.map(period => (
+        {periods.map((period, index) => (
           <Period
             key={period.id}
             period={period}
+            isLast={index === 0}
             onClick={editPeriodHandler.bind(null, period)}
           />
         ))}
       </div >
-      {periodToEdit && (
-        <Modal onClose={() => { setPeriodToEdit(null) }}>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <EditPeriod
-              period={periodToEdit}
-              projects={props.projects}
-              lastCreatedProject={props.lastCreatedProject}
-              onDelete={deletePeriodHandler}
-              onSave={updatedPeriodHandler}
-              onCancel={() => { setPeriodToEdit(null) }}
-              onCreateProject={props.onCreateProject}
-            />
-          </LocalizationProvider>
-        </Modal>
-      )}
+      <AnimatePresence>
+        {periodToEdit && (
+          <Modal onClose={() => { setPeriodToEdit(null) }}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <EditPeriod
+                period={periodToEdit}
+                projects={props.projects}
+                lastCreatedProject={props.lastCreatedProject}
+                onDelete={deletePeriodHandler}
+                onSave={updatedPeriodHandler}
+                onCancel={() => { setPeriodToEdit(null) }}
+                onCreateProject={props.onCreateProject}
+              />
+            </LocalizationProvider>
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   )
 }

@@ -10,12 +10,6 @@ export const projectSchema = z.object({
 
 export type Project = z.infer<typeof projectSchema>
 
-// export interface Project {
-// id: string;
-// name: string;
-// color: `#${string}`;
-// }
-
 export const periodSchema = z.object({
   id: z.string(),
   start: z.number(),
@@ -25,14 +19,6 @@ export const periodSchema = z.object({
 })
 
 export type Period = z.infer<typeof periodSchema>
-
-// export interface Period {
-//   id: string;
-//   start: number;
-//   end?: number;
-//   project?: Project;
-//   description?: string;
-// };
 
 export type PeriodsAction = {
   type: 'CREATE'

@@ -1,0 +1,28 @@
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* background-color: #d7ddff; */
+  background-color: var(--color-background);
+}
+
+.error-view {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 15px;
+  padding-top: 10rem;
+}
+
+.error-view a {
+  color: #fff;
+  text-decoration-color: var(--color-main);
+  text-underline-offset: 0.5em;
+  transition: all .25s ease-in-out;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.error-view a:hover,
+.error-view a:focus {
+  color: var(--color-main);
+}

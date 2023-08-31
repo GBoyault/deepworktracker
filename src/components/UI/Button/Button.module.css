@@ -11,6 +11,7 @@
   border-radius: 1em;
   letter-spacing: 0.05em;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .button--small {

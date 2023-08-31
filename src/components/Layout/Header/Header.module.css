@@ -20,3 +20,9 @@
   font-size: 0.85em;
   display: block;
 }
+
+@media (max-width: 768px) {
+  .header {
+    background-color: #ffffff1f;
+  }
+}

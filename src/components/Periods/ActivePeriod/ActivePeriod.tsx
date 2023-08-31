@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { type Period } from '../../../models'
+import { motion } from 'framer-motion'
 
+import { type Period } from '../../../models'
 import Button from '../../UI/Button/Button'
 import classes from './ActivePeriod.module.css'
 import useDocumentTitle from '../../../hooks/useDocumentTitle'
@@ -41,14 +42,20 @@ const ActivePeriod = (props: ActivePeriodProps) => {
   useDocumentTitle(`Tracking: ${formattedCount}`)
 
   return (
-    <div className={classes['active-period']}>
+    <motion.div
+      className={classes['active-period']}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.5 }}
+    >
       <div className={classes.timer}>
         {formattedCount}
       </div>
       <div className={classes.actions}>
         <Button onClick={props.onClick}>Arrêter</Button>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

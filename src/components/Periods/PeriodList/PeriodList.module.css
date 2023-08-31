@@ -3,9 +3,13 @@
   align-self: flex-end;
   padding-top: 10rem;
 }
+.period-list ul {
+  list-style: none;
+}
 
 @media (max-width: 768px) {
   .period-list {
     padding-top: 0.5rem;
+    margin-left: auto;
   }
 }

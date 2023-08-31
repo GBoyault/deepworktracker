@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { type Project } from '../../../models'
 import classes from './ColorPicker.module.css'
 
@@ -32,17 +33,30 @@ const ColorPicker = (props: ColorPickerProps) => {
   }
 
   return (
-    <ul className={classes.colors}>
+    <motion.ul
+      className={classes.colors}
+      variants={{
+        visible: { transition: { staggerChildren: 0.02 } }
+      }}
+    >
       {colors.map(color => (
-        <li key={color}>
+        <motion.li
+          key={color}
+          variants={{
+            hidden: { opacity: 0, scale: 0.5 },
+            visible: { opacity: 1, scale: [0.8, 1.3, 1] }
+          }}
+          exit={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring' }}
+        >
           <button
             style={{ borderColor: color, backgroundColor: color === selectedColor ? color : '#fff' }}
             className={`${classes.color} ${color === selectedColor ? classes['color--selected'] : ''}`}
             onClick={selectColorHandler.bind(null, color)}
           ></button>
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   )
 }
 
