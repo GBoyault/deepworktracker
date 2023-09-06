@@ -15,6 +15,7 @@ interface periodProps {
   onSave: (periodData: PeriodType) => void
   onCancel: () => void
   onCreateProject: () => void
+  onDeleteProject: (deletedProjectId: Project['id']) => void
 }
 
 const EditPeriod = (props: periodProps) => {
@@ -121,6 +122,7 @@ const EditPeriod = (props: periodProps) => {
         selectedProject={selectedProject}
         onSelect={selectProjectHandler}
         onCreateProject={props.onCreateProject}
+        onDeleteProject={props.onDeleteProject}
       />
       <div className={classes.actions}>
         <Button onClick={props.onDelete} variant={'SIMPLE'}>Supprimer la période</Button>

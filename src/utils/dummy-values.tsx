@@ -54,13 +54,13 @@ export const DUMMY_PERIODS: Period[] = [
 
 export const DUMMY_PROJECTS: Project[] = [
   {
-    id: 'idp1',
-    name: 'Boggle App',
+    id: 'iddummyp1',
+    name: 'Mon premier projet',
     color: '#a75ee8'
-  },
-  {
-    id: 'idp2',
-    name: 'TypeScript',
-    color: '#c1b313'
   }
+  // {
+  //   id: 'idp2',
+  //   name: 'TypeScript',
+  //   color: '#c1b313'
+  // }
 ]

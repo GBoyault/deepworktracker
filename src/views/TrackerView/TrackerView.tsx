@@ -25,6 +25,10 @@ const TrackerView = () => {
     setActivePeriod(newPeriod)
   }
 
+  const deleteProjectHandler = (deletedProjectId: Project['id']) => {
+    projectsDispatch({ type: 'DELETE', deletedProjectId })
+  }
+
   const updatePeriodHandler = (updatedPeriod: Period) => {
     periodsDispatch({ type: 'UPDATE', updatedPeriod })
   }
@@ -77,6 +81,7 @@ const TrackerView = () => {
               lastCreatedProject={lastCreatedProject}
               onStartPeriod={startPeriodHandler}
               onCreateProject={() => { setShowNewProjectModal(true) }}
+              onDeleteProject={deleteProjectHandler}
             />
             {periods.length > 0
               ? <PeriodList
@@ -85,6 +90,7 @@ const TrackerView = () => {
                 lastCreatedProject={lastCreatedProject}
                 projects={projects}
                 onCreateProject={() => { setShowNewProjectModal(true) }}
+                onDeleteProject={deleteProjectHandler}
                 onUpdatePeriod={updatePeriodHandler}
               />
               : <PeriodListPlaceholder />

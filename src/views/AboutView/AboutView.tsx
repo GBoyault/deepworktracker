@@ -17,7 +17,7 @@ const AboutView = () => {
       <p>React + TypeScript. Actuellement les données sont stockées en localStorage et ne sont prises en compte qu'une journée. Dans un futur incertain j'aimerais implémenter un système de compte utilisateurs et une vue tableau de bord, peut-être avec Firebase comme base de donnée. </p>
       <br />
       <p>Réalisation : <a href='https://gabrielboyault.com/' target='_blank' rel="noreferrer">Gabriel Boyault</a><br />
-        Code : <a href='https://github.com/GBoyault/deep-work-tracking/' target='_blank' rel="noreferrer">github</a></p>
+        Code : <a href='https://github.com/GBoyault/deepworktracker/' target='_blank' rel="noreferrer">github</a></p>
     </motion.div>
   )
 }

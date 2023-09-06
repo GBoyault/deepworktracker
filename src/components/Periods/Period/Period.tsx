@@ -1,6 +1,9 @@
+import { useContext } from 'react'
 import { type Period as PeriodType } from '../../../models'
-import classes from './Period.module.css'
+import { MinDurationContext } from '../../../contexts/MinDurationContext'
 import { PeriodDuration } from '../../../utils/period-duration'
+
+import classes from './Period.module.css'
 
 interface periodProps {
   period: PeriodType
@@ -10,8 +13,9 @@ interface periodProps {
 
 const Period = ({ period, isLast, onClick }: periodProps) => {
   const { start, end, description, project } = period
+  const { minDuration } = useContext(MinDurationContext)
 
-  const periodDuration = new PeriodDuration(start, end)
+  const periodDuration = new PeriodDuration(start, end, minDuration)
   const timing = periodDuration.formattedStartToEnd()
   const duration = periodDuration.formattedDuration
 

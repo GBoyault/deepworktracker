@@ -6,7 +6,9 @@
   background-color: var(--color-main);
   border: none;
   color: white;
-  box-shadow: inset -10px -10px 30px 0 #ffffff4d, 0 10px 20px 0 #1d0dca44;
+  box-shadow:
+    inset -10px -10px 30px 0 #ffffff4d,
+    0 10px 20px 0 #1d0dca44;
   transition: all 0.2s ease;
   border-radius: 1em;
   letter-spacing: 0.05em;
@@ -36,14 +38,19 @@
 }
 
 .button:hover:enabled {
-  box-shadow: inset 15px 15px 30px 0 #ffffff4d, 0 5px 10px 0 #1d0dca3f;
+  box-shadow:
+    inset 15px 15px 30px 0 #ffffff4d,
+    0 5px 10px 0 #1d0dca3f;
   background-color: var(--color-main);
   color: white;
 }
 
 .button:active:enabled {
   background-color: var(--color-main);
-  box-shadow: inset 15px 15px 30px 0 #ffffff4d, 0 4 8px 0 #1d0dca2c;
+  transform: scale(0.95);
+  box-shadow:
+    inset 15px 15px 30px 0 #ffffff4d,
+    0 4 8px 0 #1d0dca2c;
 }
 
 .button:disabled {

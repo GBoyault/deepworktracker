@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import { type Period } from '../../../models'
 import { PeriodDuration } from '../../../utils/period-duration'
+import { MinDurationContext } from '../../../contexts/MinDurationContext'
 import classes from './DailySummary.module.css'
 
 interface DailySummaryProp {
@@ -7,7 +9,8 @@ interface DailySummaryProp {
 };
 
 const DailySummary = ({ periods }: DailySummaryProp) => {
-  const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end))
+  const { minDuration } = useContext(MinDurationContext)
+  const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end, minDuration))
   const interruptions = periodDurations.filter(duration => duration.isTooShort)
 
   const totalDurationInMinuts = periodDurations.reduce((acc, cur) => {

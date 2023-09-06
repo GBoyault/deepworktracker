@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { type Project } from '../../../models'
 import classes from './ProjectSelect.module.css'
 
@@ -6,6 +6,7 @@ interface periodProps {
   projects: Project[]
   selectedProject: Project | null
   onSelect: (selectedProject: Project | null) => void
+  onDeleteProject: (deletedProjectId: Project['id']) => void
   onCreateProject: () => void
 }
 
@@ -18,6 +19,11 @@ const ProjectSelect = (props: periodProps) => {
 
   const selectNoProjetHandler = () => {
     props.onSelect(null)
+  }
+
+  const deleteProjectHandler = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+    e.stopPropagation()
+    props.onDeleteProject(id)
   }
 
   const selection = props.selectedProject
@@ -33,6 +39,12 @@ const ProjectSelect = (props: periodProps) => {
       style={{ color: project.color }}
     >
       {project.name}
+      <button
+        className={classes['delete-project']}
+        title='Supprimer ce projet ?'
+        onClick={e => { deleteProjectHandler(e, project.id) }}
+      >&#10006;
+      </button>
     </li>
   ))
 

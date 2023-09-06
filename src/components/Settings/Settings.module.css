@@ -1,0 +1,62 @@
+.settings-button {
+  cursor: pointer;
+  color: var(--color-main);
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  margin-left: 0.75rem;
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.settings-button path {
+  fill: var(--color-main);
+}
+
+.settings-button:hover {
+  transform: rotate(30deg);
+}
+.settings-button:active {
+  transform: rotate(45deg);
+}
+
+.settings-modal {
+  color: var(--color-background);
+}
+
+.settings-modal h2 {
+  color: var(--color-main);
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+  margin-bottom: 2.25rem;
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  border-bottom: 1px solid var(--color-main);
+}
+
+.input-box {
+  display: flex;
+}
+
+.value {
+  color: var(--color-main);
+  font-weight: 700;
+}
+
+.actions {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

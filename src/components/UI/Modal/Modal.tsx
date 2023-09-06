@@ -7,17 +7,17 @@ interface ModalProps {
   onClose: () => void
 }
 
-const Backdrop = (props: ModalProps) => {
+const Backdrop = ({ onClose }: ModalProps) => {
   return <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     className={classes.backdrop}
-    onClick={props.onClose}
+    onClick={onClose}
   />
 }
 
-const ModalOverlay = (props: PropsWithChildren) => {
+const ModalOverlay = ({ children }: PropsWithChildren) => {
   return (
     <motion.div
       variants={{
@@ -30,18 +30,18 @@ const ModalOverlay = (props: PropsWithChildren) => {
       transition={{ duration: 0.25 }}
       className={classes.modal}
     >
-      <div className={classes.content}>{props.children}</div>
+      <div className={classes.content}>{children}</div>
     </motion.div>
   )
 }
 
-const Modal = (props: PropsWithChildren<ModalProps>) => {
+const Modal = ({ children, onClose }: PropsWithChildren<ModalProps>) => {
   const portalElement = document.getElementById('overlays') as HTMLElement
 
   return (
     <>
-      {ReactDOM.createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
-      {ReactDOM.createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement)}
+      {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
+      {ReactDOM.createPortal(<ModalOverlay>{children}</ModalOverlay>, portalElement)}
     </>
   )
 }

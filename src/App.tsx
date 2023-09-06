@@ -4,6 +4,7 @@ import TrackerView from './views/TrackerView/TrackerView'
 import AboutView from './views/AboutView/AboutView'
 import RootView from './views/RootView/RootView'
 import ErrorView from './views/ErrorView.tsx/ErrorView'
+import MinDurationContextProvider from './contexts/MinDurationContext'
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,15 @@ const router = createBrowserRouter([
     ],
     errorElement: <ErrorView />
   }
-])
+],
+{ basename: '/deep-work-tracker' }
+)
 
 const App = () => {
   return (
-    <RouterProvider router={router} />
+    <MinDurationContextProvider>
+      <RouterProvider router={router} />
+    </MinDurationContextProvider>
   )
 }
 

@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 
 export class PeriodDuration {
-  readonly tooShortLimit: number = 15
+  readonly tooShortLimit
 
   start: number
   end: number | null
@@ -9,7 +9,8 @@ export class PeriodDuration {
   isTooShort: boolean
   formattedDuration: ReactNode
 
-  constructor (start: number, end: number | null = null) {
+  constructor (start: number, end: number | null = null, tooShortLimit: number = 15) {
+    this.tooShortLimit = tooShortLimit
     this.start = start
     this.end = end
     this.diffInMinuts = end ? Math.round((end - start) / 1000 / 60) : 0

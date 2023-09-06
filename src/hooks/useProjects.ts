@@ -7,7 +7,6 @@ export const useProjects = () => {
   const [projects, projectsDispatch] = useReducer(projectdReducer, [])
 
   useEffect(() => {
-    // Projects ?
     const initialProjects = getInitialProjects()
     projectsDispatch({ type: 'INIT', newProjects: initialProjects })
   }, [])
@@ -25,7 +24,10 @@ const projectdReducer = (projects: Project[], action: ProjectsAction): Project[]
       return projects.concat(action.newProject)
 
     case 'INIT':
-      return projects.concat(action.newProjects)
+      return action.newProjects
+
+    case 'DELETE':
+      return projects.filter(project => project.id !== action.deletedProjectId)
   }
 
   return projects

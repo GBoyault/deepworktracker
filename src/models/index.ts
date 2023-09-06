@@ -42,6 +42,9 @@ export type ProjectsAction = {
 } | {
   type: 'INIT'
   newProjects: Project[]
+} | {
+  type: 'DELETE'
+  deletedProjectId: Project['id']
 }
 
 export type ProjectsActionType = ProjectsAction['type']

@@ -14,12 +14,11 @@
   display: flex;
   justify-content: space-between;
   background-color: rgba(240, 240, 240, 0.5);
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 
 .selection:hover {
-  background-color: #f0f0f0
-
+  background-color: #f0f0f0;
 }
 
 .selection--empty {
@@ -73,6 +72,8 @@
   list-style: none;
   cursor: pointer;
   padding: 0.5em 0.75em;
+  display: flex;
+  justify-content: space-between;
 }
 
 .project-item--no-project {
@@ -105,4 +106,25 @@
 
 .new-project:hover {
   box-shadow: inset 15px 15px 30px 0 #ffffff4d;
+}
+
+.delete-project {
+  color: var(--color-main);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-project:hover {
+  border-color: var(--color-main);
+}
+
+.delete-project:active {
+  background-color: var(--color-main);
+  color: var(--color-main-light);
 }

@@ -16,6 +16,7 @@ interface PeriodListProp {
   projects: Project[]
   lastCreatedProject: Project | null
   onCreateProject: () => void
+  onDeleteProject: (deletedProjectId: Project['id']) => void
   onDeletePeriod: (periodId: string) => void
   onUpdatePeriod: (periodData: PeriodType) => void
 }
@@ -65,6 +66,7 @@ const PeriodList = (props: PeriodListProp) => {
                 onSave={updatedPeriodHandler}
                 onCancel={() => { setPeriodToEdit(null) }}
                 onCreateProject={props.onCreateProject}
+                onDeleteProject={props.onDeleteProject}
               />
             </LocalizationProvider>
           </Modal>

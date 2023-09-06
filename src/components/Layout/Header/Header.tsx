@@ -1,13 +1,15 @@
 import React from 'react'
 import MainNavigation from '../MainNavigation/MainNavigation'
+import Settings from '../../Settings/Settings'
 
-import styles from './Header.module.css'
+import classes from './Header.module.css'
 
 const Header: React.FC = () => {
   return (
-    <header className={styles.header}>
+    <header className={classes.header}>
       <h1><small>DeepWork</small>Tracker</h1>
       <MainNavigation />
+      <Settings />
     </header>
   )
 }

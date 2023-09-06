@@ -9,9 +9,10 @@ interface NewPeriodProp {
   lastCreatedProject: Project | null
   onStartPeriod: (newPeriod: Period) => void
   onCreateProject: () => void
+  onDeleteProject: (deletedProjectId: Project['id']) => void
 }
 
-const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject }: NewPeriodProp) => {
+const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject, onDeleteProject }: NewPeriodProp) => {
   const [description, setDescription] = useState('')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
@@ -58,6 +59,7 @@ const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProjec
           selectedProject={selectedProject}
           onSelect={selectProjectHandler}
           onCreateProject={onCreateProject}
+          onDeleteProject={onDeleteProject}
         />
         <Button onClick={startPeriodHandler} variant={'BIG'}>Commencer</Button>
       </div>
