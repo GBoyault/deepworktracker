@@ -74,7 +74,14 @@
   padding: 0.5rem 0.75rem;
   position: relative;
   flex-grow: 1;
-  color: white;
+  color: #fff;
+}
+
+.period--theme-light {
+  background-color: #fff;
+}
+.period--theme-light .content {
+  color: var(--color-black);
 }
 
 .timing,

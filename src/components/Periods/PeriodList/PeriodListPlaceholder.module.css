@@ -10,7 +10,7 @@
 }
 
 .placeholder p {
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   text-align: center;
   color: #cdcdcd57;
 }
@@ -20,4 +20,18 @@
   height: 4.5rem;
   margin-top: 0.5rem;
   border-radius: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .placeholder {
+    width: 25rem;
+    max-width: calc(100% - 30px);
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .empty-period {
+    display: none;
+  }
 }

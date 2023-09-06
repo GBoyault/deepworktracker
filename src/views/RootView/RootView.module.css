@@ -5,3 +5,7 @@
   background-color: var(--color-background);
   overflow-x: hidden;
 }
+
+.main--theme-light {
+  background-color: var(--color-background-light);
+}

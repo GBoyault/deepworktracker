@@ -7,11 +7,11 @@
 }
 
 html {
-  /* --color-main: #26d138; */
-  --color-black: #222222; 
+  --color-black: #282828; 
   --color-main: #9e6cff;
+  --color-white: #e0e0e0;
   --color-background: #282828;
-  --color-main-light: #e7fce9;
+  --color-background-light: #e0e0e0;
   --color-error: #975427;
   --color-error-transparent: #9754276b;
   --color-success: #2c852f;

@@ -4,7 +4,7 @@ import TrackerView from './views/TrackerView/TrackerView'
 import AboutView from './views/AboutView/AboutView'
 import RootView from './views/RootView/RootView'
 import ErrorView from './views/ErrorView.tsx/ErrorView'
-import MinDurationContextProvider from './contexts/MinDurationContext'
+import SettingsContextProvider from './contexts/SettingsContext'
 
 const router = createBrowserRouter([
   {
@@ -22,9 +22,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <MinDurationContextProvider>
+    <SettingsContextProvider>
       <RouterProvider router={router} />
-    </MinDurationContextProvider>
+    </SettingsContextProvider>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { type Period } from '../../../models'
 import { PeriodDuration } from '../../../utils/period-duration'
-import { MinDurationContext } from '../../../contexts/MinDurationContext'
+import { SettingsContext } from '../../../contexts/SettingsContext'
 import classes from './DailySummary.module.css'
 
 interface DailySummaryProp {
@@ -9,7 +9,7 @@ interface DailySummaryProp {
 };
 
 const DailySummary = ({ periods }: DailySummaryProp) => {
-  const { minDuration } = useContext(MinDurationContext)
+  const { theme, minDuration } = useContext(SettingsContext)
   const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end, minDuration))
   const interruptions = periodDurations.filter(duration => duration.isTooShort)
 
@@ -24,8 +24,12 @@ const DailySummary = ({ periods }: DailySummaryProp) => {
     totalDurationInMinuts - interruptionsDuration
   )
 
+  const className = theme === 'dark'
+    ? classes['daily-summary']
+    : `${classes['daily-summary']} ${classes['daily-summary--theme-light']}`
+
   return (
-    <header className={classes['daily-summary']}>
+    <header className={className}>
       <h2>Aujourdhui :</h2>
       <div className={classes.details}>
         {totalDurationInMinuts > 0 && (

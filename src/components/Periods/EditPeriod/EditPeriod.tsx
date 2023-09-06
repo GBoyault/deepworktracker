@@ -93,23 +93,23 @@ const EditPeriod = (props: periodProps) => {
   return (
     <div className={classes['edit-period']}>
       <h2>Éditer la période</h2>
-      <div className={classes.dates}>
-        <TimePicker
-          label="Début"
-          ampm={false}
-          value={dateStart}
-          format='HH:mm'
-          onChange={startChangeHandler}
-        />
-        <TimePicker
-          label="Fin"
-          value={dateEnd}
-          ampm={false}
-          format='HH:mm'
-          onChange={endChangeHandler}
-          minTime={dateStart}
-        />
-      </div>
+        <div className={classes.dates}>
+          <TimePicker
+            label="Début"
+            ampm={false}
+            value={dateStart}
+            format='HH:mm'
+            onChange={startChangeHandler}
+          />
+          <TimePicker
+            label="Fin"
+            value={dateEnd}
+            ampm={false}
+            format='HH:mm'
+            onChange={endChangeHandler}
+            minTime={dateStart}
+          />
+        </div>
       <input
         className={classes.input}
         type="text"

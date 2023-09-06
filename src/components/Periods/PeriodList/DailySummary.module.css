@@ -21,10 +21,12 @@
   gap: 1rem;
 }
 
-.detail {
+.daily-summary--theme-light .detail {
+  color: var(--color-black);
 }
 
-.success, .failure {
+.success,
+.failure {
   font-size: 1.5em;
   font-weight: 700;
   display: block;

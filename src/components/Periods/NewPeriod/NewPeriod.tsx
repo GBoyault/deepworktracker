@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+
 import { type Project, type Period } from '../../../models'
+import { SettingsContext } from '../../../contexts/SettingsContext'
 import ProjectSelect from './ProjectSelect'
 import Button from '../../UI/Button/Button'
 import classes from './NewPeriod.module.css'
@@ -15,6 +17,7 @@ interface NewPeriodProp {
 const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject, onDeleteProject }: NewPeriodProp) => {
   const [description, setDescription] = useState('')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const { theme } = useContext(SettingsContext)
 
   useEffect(() => {
     if (lastCreatedProject) {
@@ -49,8 +52,12 @@ const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProjec
     setSelectedProject(null)
   }
 
+  const className = theme === 'dark'
+    ? classes['new-period']
+    : `${classes['new-period']} ${classes['new-period--theme-light']}`
+
   return (
-    <div className={classes['new-period']}>
+    <div className={className}>
       <div className={classes.inner}>
         <h2>Nouvelle période</h2>
         <input type="text" placeholder='description...' value={description} onChange={descriptionChangeHandler} />
