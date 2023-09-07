@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { SettingsContext } from '../../contexts/SettingsContext'
 import classes from './AboutView.module.css'
 
-const AboutView = () => {
+export const AboutView = () => {
   const { theme, minDuration } = useContext(SettingsContext)
 
   const className = theme === 'dark'
@@ -29,5 +29,3 @@ const AboutView = () => {
     </motion.div>
   )
 }
-
-export default AboutView

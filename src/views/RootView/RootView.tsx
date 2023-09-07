@@ -5,7 +5,7 @@ import { SettingsContext } from '../../contexts/SettingsContext'
 import Header from '../../components/Layout/Header/Header'
 import classes from './RootView.module.css'
 
-const RootView = () => {
+export const RootView = () => {
   const { theme } = useContext(SettingsContext)
   const className = theme === 'dark'
     ? classes.main
@@ -20,5 +20,3 @@ const RootView = () => {
     </>
   )
 }
-
-export default RootView

@@ -13,7 +13,7 @@ import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod'
 import Modal from '../../components/UI/Modal/Modal'
 import classes from './TrackerView.module.css'
 
-const TrackerView = () => {
+export const TrackerView = () => {
   const [projects, projectsDispatch] = useProjects()
   const [periods, periodsDispatch] = usePeriods()
   const [activePeriod, setActivePeriod] = useActivePeriod()
@@ -109,5 +109,3 @@ const TrackerView = () => {
     </motion.div>
   )
 }
-
-export default TrackerView

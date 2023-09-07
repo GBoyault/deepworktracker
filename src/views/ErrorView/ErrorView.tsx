@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import Header from '../../components/Layout/Header/Header'
 import classes from './ErrorView.module.css'
 
-const ErrorView = () => {
+export const ErrorView = () => {
   return (
     <>
       <Header />
@@ -18,5 +18,3 @@ const ErrorView = () => {
     </>
   )
 }
-
-export default ErrorView
