@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { type Project } from '../../../models'
-import ColorPicker from '../NewPeriod/ColorPicker'
-import Button from '../../UI/Button/Button'
+import { ColorPicker } from './'
+import { Button } from '../../UI/'
 import classes from './NewProject.module.css'
 
 interface NewProjectProps {
@@ -9,7 +9,7 @@ interface NewProjectProps {
   onCreateProject: (newProject: Project) => void
 }
 
-const NewProject = (props: NewProjectProps) => {
+export const NewProject = ({ onCancel, onCreateProject }: NewProjectProps) => {
   const [color, setColor] = useState<Project['color']>('#f44336')
   const [name, setName] = useState<Project['name']>('')
 
@@ -20,7 +20,7 @@ const NewProject = (props: NewProjectProps) => {
       name: name.trim()
     }
 
-    props.onCreateProject(newProject)
+    onCreateProject(newProject)
     setName('')
   }
 
@@ -47,12 +47,10 @@ const NewProject = (props: NewProjectProps) => {
       <ColorPicker onChange={colorChangeHandler} />
 
       <div className={classes.actions}>
-        <Button onClick={props.onCancel} variant={'SECONDARY'}>Annuler</Button>
+        <Button onClick={onCancel} variant={'SECONDARY'}>Annuler</Button>
         <Button onClick={createProjectHandler} disabled={name.trim() === ''}>Valider</Button>
       </div>
 
     </div>
   )
 }
-
-export default NewProject

@@ -24,12 +24,12 @@ interface ColorPickerProps {
   onChange: (color: Project['color']) => void
 }
 
-const ColorPicker = (props: ColorPickerProps) => {
+export const ColorPicker = ({ onChange }: ColorPickerProps) => {
   const [selectedColor, setSelectedColor] = useState(colors[0])
 
   const selectColorHandler = (color: Project['color']) => {
     setSelectedColor(color)
-    props.onChange(color)
+    onChange(color)
   }
 
   return (
@@ -59,5 +59,3 @@ const ColorPicker = (props: ColorPickerProps) => {
     </motion.ul>
   )
 }
-
-export default ColorPicker

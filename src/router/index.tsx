@@ -11,6 +11,7 @@ export const router = createBrowserRouter([
     ],
     errorElement: <ErrorView />
   }
-],
-{ basename: '/deep-work-tracker' }
+]
+// ],
+// { basename: '/deep-work-tracker' }
 )

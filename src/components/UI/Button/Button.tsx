@@ -8,7 +8,7 @@ interface ButtonProps {
   disabled?: boolean
 }
 
-const Button = (props: PropsWithChildren<ButtonProps>) => {
+export const Button = (props: PropsWithChildren<ButtonProps>) => {
   let className = `${classes.button}`
 
   switch (props.variant) {
@@ -37,5 +37,3 @@ const Button = (props: PropsWithChildren<ButtonProps>) => {
     </button>
   )
 }
-
-export default Button

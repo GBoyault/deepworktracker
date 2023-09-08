@@ -35,7 +35,7 @@ const ModalOverlay = ({ children }: PropsWithChildren) => {
   )
 }
 
-const Modal = ({ children, onClose }: PropsWithChildren<ModalProps>) => {
+export const Modal = ({ children, onClose }: PropsWithChildren<ModalProps>) => {
   const portalElement = document.getElementById('overlays') as HTMLElement
 
   return (
@@ -45,5 +45,3 @@ const Modal = ({ children, onClose }: PropsWithChildren<ModalProps>) => {
     </>
   )
 }
-
-export default Modal

@@ -4,10 +4,8 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { AnimatePresence } from 'framer-motion'
 
 import { type Project, type Period as PeriodType } from '../../../models'
-import Period from '../Period/Period'
-import DailySummary from './DailySummary'
-import Modal from '../../UI/Modal/Modal'
-import EditPeriod from '../EditPeriod/EditPeriod'
+import { Period, EditPeriod, DailySummary } from '../'
+import { Modal } from '../../UI/'
 
 import classes from './PeriodList.module.css'
 
@@ -21,7 +19,7 @@ interface PeriodListProp {
   onUpdatePeriod: (periodData: PeriodType) => void
 }
 
-const PeriodList = (props: PeriodListProp) => {
+export const PeriodList = (props: PeriodListProp) => {
   const [periodToEdit, setPeriodToEdit] = useState<PeriodType | null>(null)
   const { periods } = props
 
@@ -75,5 +73,3 @@ const PeriodList = (props: PeriodListProp) => {
     </>
   )
 }
-
-export default PeriodList

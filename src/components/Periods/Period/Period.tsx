@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+
 import { type Period as PeriodType } from '../../../models'
 import { SettingsContext } from '../../../contexts/SettingsContext'
 import { PeriodDuration } from '../../../utils/period-duration'
@@ -11,7 +12,7 @@ interface periodProps {
   onClick: () => void
 }
 
-const Period = ({ period, isLast, onClick }: periodProps) => {
+export const Period = ({ period, isLast, onClick }: periodProps) => {
   const { start, end, description, project } = period
   const { theme, minDuration } = useContext(SettingsContext)
 
@@ -54,5 +55,3 @@ const Period = ({ period, isLast, onClick }: periodProps) => {
     </div >
   )
 }
-
-export default Period

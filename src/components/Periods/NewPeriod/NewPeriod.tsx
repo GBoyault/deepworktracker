@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { type Project, type Period } from '../../../models'
 import { SettingsContext } from '../../../contexts/SettingsContext'
-import ProjectSelect from './ProjectSelect'
-import Button from '../../UI/Button/Button'
+import { ProjectSelect } from './'
+import { Button } from '../../UI/'
 import classes from './NewPeriod.module.css'
 
 interface NewPeriodProp {
@@ -14,7 +14,7 @@ interface NewPeriodProp {
   onDeleteProject: (deletedProjectId: Project['id']) => void
 }
 
-const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject, onDeleteProject }: NewPeriodProp) => {
+export const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProject, onDeleteProject }: NewPeriodProp) => {
   const [description, setDescription] = useState('')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const { theme } = useContext(SettingsContext)
@@ -73,5 +73,3 @@ const NewPeriod = ({ projects, lastCreatedProject, onStartPeriod, onCreateProjec
     </div>
   )
 }
-
-export default NewPeriod

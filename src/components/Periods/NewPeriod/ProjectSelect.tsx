@@ -10,7 +10,7 @@ interface periodProps {
   onCreateProject: () => void
 }
 
-const ProjectSelect = (props: periodProps) => {
+export const ProjectSelect = (props: periodProps) => {
   const [expanded, setExpanded] = useState(false)
 
   const expandProjectsHandler = (): void => {
@@ -79,9 +79,6 @@ const ProjectSelect = (props: periodProps) => {
           </div>
         </>
       )}
-
     </div>
   )
 }
-
-export default ProjectSelect

@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import PurpleThemeProvider from '../../utils/mui-purple-provider'
 
-import Button from '../UI/Button/Button'
+import { Button } from '../UI/'
 import classes from './Settings.module.css'
 
 interface SettingsModalProps {

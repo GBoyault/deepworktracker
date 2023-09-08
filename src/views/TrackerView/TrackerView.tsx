@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { type Period, type Project } from '../../models'
-import { useProjects } from '../../hooks/useProjects'
-import { usePeriods } from '../../hooks/usePeriods'
-import { useActivePeriod } from '../../hooks/useActivePeriod'
 
-import NewPeriod from '../../components/Periods/NewPeriod/NewPeriod'
-import PeriodList from '../../components/Periods/PeriodList/PeriodList'
-import PeriodListPlaceholder from '../../components/Periods/PeriodList/PeriodListPlaceholder'
-import NewProject from '../../components/Periods/NewPeriod/NewProject'
-import ActivePeriod from '../../components/Periods/ActivePeriod/ActivePeriod'
-import Modal from '../../components/UI/Modal/Modal'
+import { type Period, type Project } from '../../models'
+import { useProjects, usePeriods, useActivePeriod } from '../../hooks/'
+import { Modal } from '../../components/UI/'
+import {
+  NewPeriod,
+  PeriodList,
+  PeriodListPlaceholder,
+  NewProject,
+  ActivePeriod
+} from '../../components/Periods/'
+
 import classes from './TrackerView.module.css'
 
 export const TrackerView = () => {

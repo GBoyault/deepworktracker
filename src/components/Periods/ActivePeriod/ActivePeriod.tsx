@@ -2,24 +2,24 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 import { type Period } from '../../../models'
-import Button from '../../UI/Button/Button'
+import { Button } from '../../UI/'
 import classes from './ActivePeriod.module.css'
-import useDocumentTitle from '../../../hooks/useDocumentTitle'
+import { useDocumentTitle } from '../../../hooks/'
 
 interface ActivePeriodProps {
   period: Period
   onClick: () => void
 }
 
-const ActivePeriod = (props: ActivePeriodProps) => {
+export const ActivePeriod = ({ period, onClick }: ActivePeriodProps) => {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
     const nowInSecond = Math.ceil(Date.now() / 1000)
-    const startInSecond = Math.ceil(props.period.start / 1000)
+    const startInSecond = Math.ceil(period.start / 1000)
 
     setCount(nowInSecond - startInSecond)
-  }, [props.period.start])
+  }, [period.start])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,10 +53,8 @@ const ActivePeriod = (props: ActivePeriodProps) => {
         {formattedCount}
       </div>
       <div className={classes.actions}>
-        <Button onClick={props.onClick}>Arrêter</Button>
+        <Button onClick={onClick}>Arrêter</Button>
       </div>
     </motion.div>
   )
 }
-
-export default ActivePeriod

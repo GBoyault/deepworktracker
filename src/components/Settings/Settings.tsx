@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
-import Modal from '../UI/Modal/Modal'
+import { Modal } from '../UI/'
 import SettingsModal from './SettingsModal'
 import { settings } from '../../utils/icons'
 import classes from './Settings.module.css'

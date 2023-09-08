@@ -8,7 +8,7 @@ interface DailySummaryProp {
   periods: Period[]
 };
 
-const DailySummary = ({ periods }: DailySummaryProp) => {
+export const DailySummary = ({ periods }: DailySummaryProp) => {
   const { theme, minDuration } = useContext(SettingsContext)
   const periodDurations = periods.map(period => new PeriodDuration(period.start, period.end, minDuration))
   const interruptions = periodDurations.filter(duration => duration.isTooShort)
@@ -50,5 +50,3 @@ const DailySummary = ({ periods }: DailySummaryProp) => {
     </header >
   )
 }
-
-export default DailySummary

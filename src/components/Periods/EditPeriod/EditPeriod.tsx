@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import moment from 'moment'
+import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 
 import { type Project, type Period as PeriodType } from '../../../models'
-import ProjectSelect from '../NewPeriod/ProjectSelect'
-import Button from '../../UI/Button/Button'
+import { ProjectSelect } from '../NewPeriod/'
+import { Button } from '../../UI/'
 import classes from './EditPeriod.module.css'
 
 interface periodProps {
@@ -18,7 +18,7 @@ interface periodProps {
   onDeleteProject: (deletedProjectId: Project['id']) => void
 }
 
-const EditPeriod = (props: periodProps) => {
+export const EditPeriod = (props: periodProps) => {
   const [description, setDescription] = useState('')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [start, setStart] = useState(0)
@@ -93,23 +93,23 @@ const EditPeriod = (props: periodProps) => {
   return (
     <div className={classes['edit-period']}>
       <h2>Éditer la période</h2>
-        <div className={classes.dates}>
-          <TimePicker
-            label="Début"
-            ampm={false}
-            value={dateStart}
-            format='HH:mm'
-            onChange={startChangeHandler}
-          />
-          <TimePicker
-            label="Fin"
-            value={dateEnd}
-            ampm={false}
-            format='HH:mm'
-            onChange={endChangeHandler}
-            minTime={dateStart}
-          />
-        </div>
+      <div className={classes.dates}>
+        <TimePicker
+          label="Début"
+          ampm={false}
+          value={dateStart}
+          format='HH:mm'
+          onChange={startChangeHandler}
+        />
+        <TimePicker
+          label="Fin"
+          value={dateEnd}
+          ampm={false}
+          format='HH:mm'
+          onChange={endChangeHandler}
+          minTime={dateStart}
+        />
+      </div>
       <input
         className={classes.input}
         type="text"
@@ -132,5 +132,3 @@ const EditPeriod = (props: periodProps) => {
     </div>
   )
 }
-
-export default EditPeriod
