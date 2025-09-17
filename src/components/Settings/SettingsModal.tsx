@@ -24,7 +24,7 @@ const SettingsModal = ({ onClose }: SettingsModalProps) => {
     return `${value} min`;
   };
 
-  const sliderChangeHandler = (e: Event, newValue: number | number[]) => {
+  const sliderChangeHandler = (_: Event, newValue: number | number[]) => {
     setMinDuration(newValue as number);
   };
 
