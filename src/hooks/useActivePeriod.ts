@@ -1,34 +1,37 @@
-import { useEffect, useState } from 'react'
-import { type Period, periodSchema } from '../models'
-import { PeriodDuration } from '../utils/period-duration'
+import { useEffect, useState } from "react";
+import { type Period, periodSchema } from "../models";
+import { PeriodDuration } from "../utils/period-duration";
 
 export const useActivePeriod = () => {
-  const [activePeriod, setActivePeriod] = useState<Period | null>(null)
+  const [activePeriod, setActivePeriod] = useState<Period | null>(null);
 
   useEffect(() => {
-    const initialActivePeriod = getInitialActivePeriod()
-    setActivePeriod(initialActivePeriod)
-  }, [])
+    const initialActivePeriod = getInitialActivePeriod();
+    setActivePeriod(initialActivePeriod);
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem('dwt_active_period', JSON.stringify(activePeriod))
-  }, [activePeriod])
+    localStorage.setItem("dwt_active_period", JSON.stringify(activePeriod));
+  }, [activePeriod]);
 
-  return [activePeriod, setActivePeriod] as const
-}
+  return [activePeriod, setActivePeriod] as const;
+};
 
 const getInitialActivePeriod = () => {
-  const storedActivePeriod = localStorage.getItem('dwt_active_period')
+  const storedActivePeriod = localStorage.getItem("dwt_active_period");
   if (!storedActivePeriod) {
-    return null
+    return null;
   }
 
-  const parsedActivePeriod = JSON.parse(storedActivePeriod)
-  const activePeriodValidation = periodSchema.safeParse(parsedActivePeriod)
+  const parsedActivePeriod = JSON.parse(storedActivePeriod);
+  const activePeriodValidation = periodSchema.safeParse(parsedActivePeriod);
 
-  if (!activePeriodValidation.success || !PeriodDuration.isToday(activePeriodValidation.data.start)) {
-    return null
+  if (
+    !activePeriodValidation.success ||
+    !PeriodDuration.isToday(activePeriodValidation.data.start)
+  ) {
+    return null;
   }
 
-  return activePeriodValidation.data
-}
+  return activePeriodValidation.data;
+};

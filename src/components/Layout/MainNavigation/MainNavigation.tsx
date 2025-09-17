@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom'
-import classes from './MainNavigation.module.css'
+import { NavLink } from "react-router";
+import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
   return (
@@ -27,7 +27,7 @@ const MainNavigation = () => {
         </li>
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default MainNavigation
+export default MainNavigation;

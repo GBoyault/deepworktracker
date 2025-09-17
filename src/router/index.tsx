@@ -1,15 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { RootView, TrackerView, AboutView, ErrorView } from '../views'
+import { createBrowserRouter } from "react-router";
+import { RootView, TrackerView, AboutView, ErrorView } from "../views";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootView />,
     children: [
-      { path: '', element: <TrackerView /> },
-      { path: 'about', element: <AboutView /> }
+      { path: "", element: <TrackerView /> },
+      { path: "about", element: <AboutView /> },
     ],
-    errorElement: <ErrorView />
-  }
-]
-)
+    errorElement: <ErrorView />,
+  },
+]);

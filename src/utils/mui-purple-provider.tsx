@@ -1,20 +1,16 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { type PropsWithChildren } from 'react'
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { type PropsWithChildren } from "react";
 
 const purpleTheme = createTheme({
   palette: {
     secondary: {
-      main: '#9e6cff'
-    }
-  }
-})
+      main: "#9e6cff",
+    },
+  },
+});
 
 const PurpleThemeProvider = ({ children }: PropsWithChildren) => {
-  return (
-    <ThemeProvider theme={purpleTheme}>
-      {children}
-    </ThemeProvider>
-  )
-}
+  return <ThemeProvider theme={purpleTheme}>{children}</ThemeProvider>;
+};
 
-export default PurpleThemeProvider
+export default PurpleThemeProvider;
